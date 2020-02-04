@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +52,7 @@ public class UserController {
     @GetMapping("toUpload")
     public String toUploading()
     {
-        return "user/upload1";
+        return "user/upload";
     }
     @GetMapping("information")
     public String userInformation()
@@ -174,7 +176,7 @@ public class UserController {
         if ((password.equals(null)||password.equals("")))
         {
             msg.setFlag(0);
-            msg.setMsg("没有提交数据更新");
+            msg.setMsg("No Data");
             return msg;
         }
         if (!(password.equals(null)||password.equals("")))
@@ -199,6 +201,31 @@ public class UserController {
         mv.setViewName("login");
         return mv;
     }
-
+    @PostMapping("search")
+    @ResponseBody
+    public AjaxReturnMsg search(HttpServletRequest request)
+    {
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+        String contents=request.getParameter("contents");
+        Long userId=((User)request.getSession().getAttribute("user")).getId();
+        List<FileRecord> fileList= fileService.getFileLikeContents(contents,userId);
+        if (fileList==null||fileList.isEmpty())
+        {
+            msg.setMsg("未搜索到数据");
+            msg.setFlag(0);
+            return msg;
+        }
+        request.getSession().setAttribute("contents",contents);
+        msg.setFlag(1);
+        return msg;
+    }
+    @GetMapping("search")
+    public String Search(HttpServletRequest request)
+    {
+        Long userId=((User)request.getSession().getAttribute("user")).getId();
+        List<FileRecord> fileList= fileService.getFileLikeContents((String) request.getSession().getAttribute("contents"),userId);
+        request.setAttribute("fileList",fileList);
+        return "user/search";
+    }
 
 }

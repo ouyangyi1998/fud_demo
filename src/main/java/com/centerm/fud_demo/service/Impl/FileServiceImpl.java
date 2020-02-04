@@ -67,4 +67,8 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    @Override
+    public List<FileRecord> getFileLikeContents(String contents,Long userId) {
+        return fileDao.getFileLikeContents("%"+contents+"%",userId);
+    }
 }

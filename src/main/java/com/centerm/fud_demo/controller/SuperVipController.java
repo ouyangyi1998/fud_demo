@@ -1,5 +1,6 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.entity.User;
+import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.SuperVipService;
 import com.centerm.fud_demo.shiro.UserRealm;
 import io.swagger.annotations.ApiOperation;
@@ -10,9 +11,13 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -48,10 +53,12 @@ public class SuperVipController {
 
     @RequestMapping("/handleAdmin")
     @RequiresRoles(value = "SUPERVIP")
-    public ModelAndView handleAdmin(ServletRequest request)
+    @ResponseBody
+    public AjaxReturnMsg handleAdmin(ServletRequest request)
     {
-        ModelAndView mv=new ModelAndView();
-        Long userId=Long.parseLong(request.getParameter("id"));
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+        Long userId=Long.parseLong(request.getParameter("userId"));
+        System.out.println(userId);
         if (superVipService.getUserRoles(userId) == ADMIN)
         {
             superVipService.removeAdmin(userId);
@@ -63,20 +70,24 @@ public class SuperVipController {
         DefaultWebSecurityManager securityManager=(DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
         UserRealm userRealm=(UserRealm)securityManager.getRealms().iterator().next();
         userRealm.clearAllCache();
-        mv.setViewName("forward:/supervip/permission");
-        return mv;
+        msg.setFlag(1);
+        return msg;
     }
     /**
-     * @param userId 用户id
+     * @param
      * @return
      */
     @ApiOperation("删除用户")
-    @GetMapping("delete")
-    public ModelAndView deleteUser(Long userId) {
-        ModelAndView mv=new ModelAndView();
+    @PostMapping("delete")
+    @RequiresRoles(value = "SUPERVIP")
+    @ResponseBody
+    public AjaxReturnMsg deleteUser(HttpServletRequest request) {
+        Long userId=Long.valueOf(request.getParameter("userId"));
+       AjaxReturnMsg msg=new AjaxReturnMsg();
         superVipService.removeUser(userId);
-        mv.setViewName("redirect:/supervip/permission");
-        return mv;
+        msg.setFlag(1);
+        return msg;
+
     }
 
 }

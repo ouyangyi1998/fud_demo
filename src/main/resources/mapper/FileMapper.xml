@@ -28,10 +28,10 @@
     </delete>
     <delete id="deleteDownloadRecord" parameterType="long">
         DELETE FROM fud.download
-        WHERE download.file_id=#{fileId}
+        WHERE download.fileId=#{fileId}
     </delete>
     <insert id="addDownloadRecord" parameterMap="DownloadRecord">
-        INSERT INTO download(create_time, user_id, file_id)
+        INSERT INTO download(createTime, userId, fileId)
         VALUES (#{createTime}, #{userId}, #{fileId})
     </insert>
     <select id="getFileById" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
@@ -70,12 +70,16 @@
         LIMIT 0, 5
     </select>
     <select id="getLatestDownloaded" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT f.name, d.create_time
+        SELECT f.name, d.createTime
         FROM fud.file f, fud.download d
-        WHERE d.file_id=f.id
-        ORDER BY d.create_time
+        WHERE d.fileId=f.id
+        ORDER BY d.createTime
         LIMIT 0, 5
     </select>
-
+    <select id="getFileLikeContents" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT fud.file.*
+        FROM fud.file
+        WHERE fud.file.name LIKE #{param1} AND fud.file.user_id=#{param2}
+    </select>
 
 </mapper>

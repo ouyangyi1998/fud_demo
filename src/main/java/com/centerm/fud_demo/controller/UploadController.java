@@ -1,5 +1,6 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.entity.User;
+import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
 import io.swagger.annotations.ApiOperation;
@@ -74,17 +75,25 @@ public class UploadController {
     }
 
     /**
-     * @param fileId 文件id
+     * @param
      * @return
      */
     @ApiOperation("删除文件")
-    @GetMapping("toDelete")
-    public ModelAndView toDelete(Long fileId, HttpServletRequest request) {
-        ModelAndView mv=new ModelAndView();
+    @PostMapping("toDelete")
+    @ResponseBody
+    public AjaxReturnMsg toDelete(HttpServletRequest request) {
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+        Long fileId=Long.parseLong(request.getParameter("fileId"));
         currUser = (User) request.getSession().getAttribute("user");
         System.out.println("当前用户id为：" +currUser.getId());
-        fileService.deleteFileById(currUser.getId(), fileId);
-        mv.setViewName("redirect:/user/filemanager");
-        return mv;
+        Boolean isSuccess= fileService.deleteFileById(currUser.getId(), fileId);
+        if (isSuccess==false)
+        {
+            msg.setFlag(0);
+            msg.setMsg("Delete Fail");
+            return msg;
+        }
+        msg.setFlag(1);
+        return msg;
     }
 }

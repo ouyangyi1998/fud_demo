@@ -60,5 +60,8 @@ public interface FileService {
 
 
 
+    List<FileRecord> getFileLikeContents(String contents,Long userId);
+
+
 
 }

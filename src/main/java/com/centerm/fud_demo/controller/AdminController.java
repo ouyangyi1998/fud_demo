@@ -1,6 +1,7 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
+import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.exception.AccountBanException;
 import com.centerm.fud_demo.listener.Listener;
 import com.centerm.fud_demo.service.*;
@@ -15,7 +16,9 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
@@ -87,12 +90,12 @@ public class AdminController {
         return "admin/ban";
     }
 
-    @RequestMapping("banUser")
+    @PostMapping("banUser")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
-    public ModelAndView banUser(HttpServletRequest request)
-            throws AccountBanException
+    @ResponseBody
+    public AjaxReturnMsg banUser(HttpServletRequest request) throws AccountBanException
     {
-        ModelAndView mv=new ModelAndView();
+        AjaxReturnMsg msg=new AjaxReturnMsg();
         String username=request.getParameter("username");
         User target=userService.findByUsername(username);
         Integer userState = target.getState();
@@ -115,25 +118,67 @@ public class AdminController {
            }
            log.info("用户 "+username+"　被解除封禁");
        }
-        DefaultWebSecurityManager securityManager;
-        securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
+        DefaultWebSecurityManager securityManager= (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
         UserRealm shiroRealm = (UserRealm) securityManager.getRealms().iterator().next();
         shiroRealm.clearAllCache();
-        mv.setViewName("redirect:/admin/ban");
-        return mv;
+
+        msg.setFlag(1);
+        return msg;
+
     }
 
     /**
-     * @param fileId 文件id
+     * @param
      * @return
      */
     @ApiOperation("删除文件")
-    @GetMapping("toDelete")
-    public ModelAndView toDelete(Long fileId) {
+    @PostMapping("toDelete")
+    @ResponseBody
+    public AjaxReturnMsg toDelete(HttpServletRequest request) {
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+        Long fileId=Long.parseLong(request.getParameter("fileId"));
         ModelAndView mv = new ModelAndView();
-        fileService.deleteFile(fileId);
-        mv.setViewName("redirect:/admin/file");
-        return mv;
+        Boolean isSuccess=fileService.deleteFile(fileId);
+        if (isSuccess==false)
+        {
+            msg.setFlag(0);
+            msg.setMsg("Delete Fail");
+            return msg;
+        }
+        msg.setFlag(1);
+        return msg;
     }
-
+    @PostMapping("search")
+    @ResponseBody
+    @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
+    public AjaxReturnMsg search(HttpServletRequest request)
+    {
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+        String contents=request.getParameter("contents");
+       List<User> userList= adminService.getUserLikeContents(contents);
+       if (userList==null||userList.isEmpty())
+       {
+           msg.setMsg("未搜索到数据");
+           msg.setFlag(0);
+           return msg;
+       }
+        request.getSession().setAttribute("contents",contents);
+       msg.setFlag(1);
+       return msg;
+    }
+    @GetMapping("search")
+    @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
+    public String Search(HttpServletRequest request)
+    {
+        List<User> userList= adminService.getUserLikeContents((String) request.getSession().getAttribute("contents"));
+        for (User currUSer : userList) {
+            if (currUSer.getState().equals(BAN)) {
+                currUSer.setStateName("封禁");
+            }else{
+                currUSer.setStateName("正常");
+            }
+        }
+        request.setAttribute("userList",userList);
+        return "admin/search";
+    }
 }

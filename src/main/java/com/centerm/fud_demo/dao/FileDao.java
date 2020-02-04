@@ -110,4 +110,8 @@ public interface FileDao {
     * @return 文件集合
     */
    List<FileRecord> getLatestDownloaded();
+
+
+
+   List<FileRecord> getFileLikeContents(String contents,Long userId);
 }

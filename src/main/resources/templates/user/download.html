@@ -14,6 +14,36 @@
     <link rel="stylesheet" th:href="@{/css/font-awesome/css/font-awesome.css}">
     <link rel="stylesheet" th:href="@{/css/util/animate.css}">
     <link th:href="@{/css/util/sweetalert2.min.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/sweetalert2.js}"></script>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript">
+        function search() {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/user/search",
+                dataType: "json",
+                data: {
+                    contents: $("#contents").val(),
+                },
+                success: function (data) {
+                    if (data.flag == 1) {
+
+                        window.location.href = "/user/search";
+
+                    } else {
+                        swal({
+                            text: data.msg,
+                            type: "info",
+                            confirm: 'ok',
+                            confirmButtonColor: '#fd2c45',
+                        });
+                    }
+                },
+            });
+        }
+    </script>
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
@@ -33,8 +63,12 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
                     <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-search"></i></a>
-                        <form class="app-search">
-                            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="fa fa-times"></i></a> </form>
+                        <form class="app-search" onsubmit="search()">
+                            <input type="text" class="form-control" id="contents" placeholder="Search & enter">
+                            <a class="srh-btn">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </form>
                     </li>
                 </ul>
 

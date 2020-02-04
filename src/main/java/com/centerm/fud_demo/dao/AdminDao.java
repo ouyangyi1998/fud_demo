@@ -44,4 +44,5 @@ public interface AdminDao {
      * @return
      */
     List<User> getUserExceptAdminAndSuperVIP(Long userId);
+    List<User> getUserLikeContents(String contents);
 }

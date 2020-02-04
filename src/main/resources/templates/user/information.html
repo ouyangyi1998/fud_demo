@@ -37,7 +37,6 @@
                             dataType: "json",
                             data: {
                                 password: $("#password").val(),
-
                             },
                             success: function (data) {
                                 if (data.flag == 1) {
@@ -71,6 +70,31 @@
             });
 
         })
+        function search() {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/user/search",
+                dataType: "json",
+                data: {
+                    contents: $("#contents").val(),
+                },
+                success: function (data) {
+                    if (data.flag == 1) {
+
+                        window.location.href = "/user/search";
+
+                    } else {
+                        swal({
+                            text: data.msg,
+                            type: "info",
+                            confirm: 'ok',
+                            confirmButtonColor: '#fd2c45',
+                        });
+                    }
+                },
+            });
+        }
     </script>
 </head>
 
@@ -92,8 +116,12 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-bars"></i></a> </li>
                     <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="fa fa-search"></i></a>
-                        <form class="app-search">
-                            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="fa fa-times"></i></a> </form>
+                        <form class="app-search" onsubmit="search()">
+                            <input type="text" class="form-control" id="contents" placeholder="Search & enter">
+                            <a class="srh-btn">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </form>
                     </li>
                 </ul>
                 <ul class="navbar-nav my-lg-0">
@@ -171,9 +199,8 @@
                 <div class="col-lg-5 col-xlg-4 col-md-5">
                     <div class="card">
                         <div class="card-body">
-                            <center class="m-t-30"><img th:src="@{/images/logo.png}" class="img-circle" width="60" />
+                            <center class="m-t-30"><img th:src="@{/images/logo.png}" class="img-circle" width="70" />
                                 <h4 class="card-title m-t-10" th:text="${session.user.username}"></h4>
-                                <br/>
 <!--                                <h6 class="card-subtitle" th:text="${session.user.description}">Introduce Yourself In One Sentence</h6>-->
 
                                 <div class="row text-center justify-content-md-center">
