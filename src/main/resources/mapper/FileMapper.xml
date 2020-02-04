@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centerm.fud_demo.dao.FileDao">
+    <parameterMap id="FileRecord" type="com.centerm.fud_demo.entity.FileRecord"/>
+    <parameterMap id="DownloadRecord" type="com.centerm.fud_demo.entity.DownloadRecord"/>
+    <update id="updateFile" parameterType="long">
+        UPDATE fud.file
+        SET download_times=download_times+1
+        WHERE file.id=#{fileId}
+    </update>
+    <select id="getFileByUserId" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.id, file.name, file.size, file.suffix, file.create_time createTime
+        FROM fud.file
+        WHERE fud.file.user_id=#{userId}
+    </select>
+    <insert id="addFile" parameterMap="FileRecord">
+        INSERT INTO file(name, local_url, size, user_id, md5, suffix, create_time)
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{createTime})
+    </insert>
+    <delete id="deleteFileById" parameterType="long">
+        DELETE FROM fud.file
+        WHERE file.id=#{param2} AND file.user_id=#{param1}
+    </delete>
+    <delete id="deleteFile" parameterType="long">
+        DELETE FROM fud.file
+        WHERE file.id=#{fileId}
+    </delete>
+    <delete id="deleteDownloadRecord" parameterType="long">
+        DELETE FROM fud.download
+        WHERE download.file_id=#{fileId}
+    </delete>
+    <insert id="addDownloadRecord" parameterMap="DownloadRecord">
+        INSERT INTO download(create_time, user_id, file_id)
+        VALUES (#{createTime}, #{userId}, #{fileId})
+    </insert>
+    <select id="getFileById" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.id, file.name,file.local_url localUrl, file.create_time createTime
+        FROM fud.file
+        WHERE id = #{id}
+    </select>
+    <select id="getAllFile" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.id, file.name, file.size, file.suffix, file.create_time createTime
+        FROM fud.file
+    </select>
+
+    <select id="getMostDownloadRecord" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.name, file.size, file.suffix, file.create_time createTime, file.download_times downloadTimes
+        FROM fud.file
+        ORDER BY download_times DESC
+        LIMIT 0,5
+    </select>
+    <select id="getDownloadTimesByUserId" parameterType="long" resultType="java.lang.Long">
+        SELECT IFNULL(SUM(file.download_times), 0)
+        FROM fud.file
+        WHERE file.user_id = #{userId}
+    </select>
+    <select id="getDownloadTimes" resultType="java.lang.Long">
+        SELECT IFNULL(SUM(file.download_times), 0)
+        FROM fud.file
+    </select>
+    <select id="getUploadTimes" resultType="java.lang.Long">
+        SELECT IFNULL(COUNT(*), 0)
+        FROM fud.file
+    </select>
+    <select id="getLatestUploaded" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.name, file.create_time createTime
+        FROM fud.file
+        ORDER BY create_time
+        LIMIT 0, 5
+    </select>
+    <select id="getLatestDownloaded" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT f.name, d.create_time
+        FROM fud.file f, fud.download d
+        WHERE d.file_id=f.id
+        ORDER BY d.create_time
+        LIMIT 0, 5
+    </select>
+
+
+</mapper>
