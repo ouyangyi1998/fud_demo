@@ -64,13 +64,13 @@
         FROM fud.file
     </select>
     <select id="getLatestUploaded" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT file.name, file.create_time createTime
+        SELECT file.name, DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS createTime
         FROM fud.file
-        ORDER BY create_time
+        ORDER BY fud.file.create_time
         LIMIT 0, 5
     </select>
     <select id="getLatestDownloaded" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT f.name, d.createTime
+        SELECT f.name, DATE_FORMAT(d.createTime,'%Y-%m-%d')
         FROM fud.file f, fud.download d
         WHERE d.fileId=f.id
         ORDER BY d.createTime

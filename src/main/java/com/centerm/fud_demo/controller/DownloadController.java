@@ -45,7 +45,6 @@ public class DownloadController {
         DownloadRecord downloadRecord = new DownloadRecord(new Timestamp(System.currentTimeMillis()), currUser.getId(), id);
         downloadService.addDownloadRecord(downloadRecord);
         fileService.updateFile(id);
-        downloadService.deleteDownloadRecord(id);
         return "user/download";
     }
 }
