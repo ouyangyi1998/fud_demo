@@ -6,6 +6,7 @@ import com.centerm.fud_demo.exception.AccountBanException;
 import com.centerm.fud_demo.listener.Listener;
 import com.centerm.fud_demo.service.*;
 import com.centerm.fud_demo.shiro.UserRealm;
+import com.centerm.fud_demo.utils.GetDateUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -180,5 +184,92 @@ public class AdminController {
         }
         request.setAttribute("userList",userList);
         return "admin/search";
+    }
+    @PostMapping("getChart")
+    @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
+    @ResponseBody
+    public List<Map<String,Object>> getChart(HttpServletRequest request)
+    {
+        List<Map<String,Object>> uploadList= adminService.getAllUploadToMorrisJs();
+        List<Map<String,Object>> downloadList= adminService.getAllDownloadToMorrisJs();
+
+
+        List<Map<String,Object>> list=new ArrayList<>();
+        Map<String,Object> map1=new HashMap<>();map1.put("days", GetDateUtil.getDate(7));map1.put("upload",0);map1.put("download",0);
+        Map<String,Object> map2=new HashMap<>();map2.put("days",GetDateUtil.getDate(6));map2.put("upload",0);map2.put("download",0);
+        Map<String,Object> map3=new HashMap<>();map3.put("days",GetDateUtil.getDate(5));map3.put("upload",0);map3.put("download",0);
+        Map<String,Object> map4=new HashMap<>();map4.put("days",GetDateUtil.getDate(4));map4.put("upload",0);map4.put("download",0);
+        Map<String,Object> map5=new HashMap<>();map5.put("days",GetDateUtil.getDate(3));map5.put("upload",0);map5.put("download",0);
+        Map<String,Object> map6=new HashMap<>();map6.put("days",GetDateUtil.getDate(2));map6.put("upload",0);map6.put("download",0);
+        Map<String,Object> map7=new HashMap<>();map7.put("days",GetDateUtil.getDate(1));map7.put("upload",0);map7.put("download",0);
+
+        for (Map<String, Object> m : uploadList)
+        {
+            if(m.get("days").equals(map1.get("days"))){
+                map1.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map2.get("days"))){
+                map2.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map3.get("days"))){
+                map3.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map4.get("days"))){
+                map4.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map5.get("days"))){
+                map5.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map6.get("days"))){
+                map6.put("upload",m.get("upload"));
+            }
+            if(m.get("days").equals(map7.get("days"))){
+                map7.put("upload",m.get("upload"));
+            }
+        }
+        for (Map<String, Object> m : downloadList)
+        {
+            if(m.get("days").equals(map1.get("days"))){
+                map1.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map2.get("days"))){
+                map2.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map3.get("days"))){
+                map3.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map4.get("days"))){
+                map4.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map5.get("days"))){
+                map5.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map6.get("days"))){
+                map6.put("download",m.get("download"));
+            }
+            if(m.get("days").equals(map7.get("days"))){
+                map7.put("download",m.get("download"));
+            }
+        }
+        list.add(map1);
+        list.add(map2);
+        list.add(map3);
+        list.add(map4);
+        list.add(map5);
+        list.add(map6);
+        list.add(map7);
+        return list;
+    }
+    @PostMapping("getC3Chart")
+    @ResponseBody
+    public Map<String,Object> getC3Chart()
+    {
+        int all=adminService.getAllUserNumber();
+        int admin=adminService.getAdminNumber();
+        System.out.println(all+"  "+admin);
+        Map<String,Object> map=new HashMap<>();
+        map.put("user",((all-admin)*100)/all);
+        map.put("admin",(100*admin)/all);
+        return map;
     }
 }

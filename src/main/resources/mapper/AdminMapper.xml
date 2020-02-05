@@ -32,4 +32,29 @@
         WHERE user.username LIKE #{contents} AND fud.user.roleId!=3 AND fud.user.roleId!=2
         ORDER BY fud.user.id
     </select>
+    <select id="getAllUploadToMorrisJs" resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload
+        FROM fud.file
+        WHERE  fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY )
+          AND DATE( NOW( ) )
+        GROUP BY days
+        ORDER BY days DESC
+    </select>
+    <select id="getAllDownloadToMorrisJs"  resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(fud.download.createTime,'%Y-%m-%d') AS days,COUNT(*) AS download
+        FROM fud.download
+        WHERE fud.download.createTime BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY )
+          AND DATE( NOW( ) )
+        GROUP BY days
+        ORDER BY days DESC
+    </select>
+    <select id="getAdminNumber" resultType="int">
+        SELECT COUNT(*)
+        FROM fud.user
+        WHERE fud.user.roleId=2 OR fud.user.roleId=3
+    </select>
+    <select id="getAllUserNumber" resultType="int">
+        SELECT COUNT(*)
+        FROM fud.user
+    </select>
 </mapper>

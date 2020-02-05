@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文件相关操作实现类
@@ -70,5 +71,15 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<FileRecord> getFileLikeContents(String contents,Long userId) {
         return fileDao.getFileLikeContents("%"+contents+"%",userId);
+    }
+
+    @Override
+    public List<Map<String,Object>> getUploadToMorrisJs(Long userId) {
+        return fileDao.getUploadToMorrisJs(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getDownloadToMorrisJs(Long userId) {
+        return fileDao.getDownloadToMorrisJs(userId);
     }
 }

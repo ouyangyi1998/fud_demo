@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * File相关操作映射
@@ -114,4 +115,11 @@ public interface FileDao {
 
 
    List<FileRecord> getFileLikeContents(String contents,Long userId);
+
+
+
+   List<Map<String,Object>> getUploadToMorrisJs(Long userId);
+
+
+    List<Map<String,Object>> getDownloadToMorrisJs(Long userId);
 }

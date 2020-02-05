@@ -6,6 +6,7 @@ import com.centerm.fud_demo.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -37,5 +38,25 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<User> getUserLikeContents(String contents) {
         return adminDao.getUserLikeContents("%"+contents+"%");
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllUploadToMorrisJs() {
+        return adminDao.getAllUploadToMorrisJs();
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllDownloadToMorrisJs() {
+        return adminDao.getAllDownloadToMorrisJs();
+    }
+
+    @Override
+    public Integer getAdminNumber() {
+        return adminDao.getAdminNumber();
+    }
+
+    @Override
+    public Integer getAllUserNumber() {
+        return adminDao.getAllUserNumber();
     }
 }

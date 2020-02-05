@@ -4,6 +4,7 @@ import com.centerm.fud_demo.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 管理员映射
@@ -44,5 +45,19 @@ public interface AdminDao {
      * @return
      */
     List<User> getUserExceptAdminAndSuperVIP(Long userId);
+
+
+
     List<User> getUserLikeContents(String contents);
+
+
+    List<Map<String,Object>> getAllUploadToMorrisJs();
+
+
+
+    List<Map<String,Object>> getAllDownloadToMorrisJs();
+
+    Integer getAdminNumber();
+
+    Integer getAllUserNumber();
 }

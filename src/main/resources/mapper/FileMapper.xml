@@ -81,5 +81,22 @@
         FROM fud.file
         WHERE fud.file.name LIKE #{param1} AND fud.file.user_id=#{param2}
     </select>
-
+    <select id="getUploadToMorrisJs" parameterType="long" resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload
+        FROM fud.file
+        WHERE fud.file.user_id = #{userId}
+          AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY )
+          AND DATE( NOW( ) )
+        GROUP BY days
+        ORDER BY days DESC
+    </select>
+    <select id="getDownloadToMorrisJs" parameterType="long" resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(fud.download.createTime,'%Y-%m-%d') AS days,COUNT(*) AS download
+        FROM fud.download
+        WHERE fud.download.userId = #{userId}
+          AND fud.download.createTime BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY )
+          AND DATE( NOW( ) )
+        GROUP BY days
+        ORDER BY days DESC
+    </select>
 </mapper>

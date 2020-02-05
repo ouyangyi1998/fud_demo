@@ -5,6 +5,7 @@ import com.centerm.fud_demo.entity.FileRecord;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * File相关操作接口
@@ -63,5 +64,9 @@ public interface FileService {
     List<FileRecord> getFileLikeContents(String contents,Long userId);
 
 
+    List<Map<String,Object>> getUploadToMorrisJs(Long userId);
 
+
+
+    List<Map<String,Object>> getDownloadToMorrisJs(Long userId);
 }

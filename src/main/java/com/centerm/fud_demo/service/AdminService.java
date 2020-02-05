@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminService {
 
@@ -30,4 +31,13 @@ public interface AdminService {
     List<User> getUserExceptAdminAndSuperVIP(Long userId);
 
     List<User> getUserLikeContents(String contents);
+
+    List<Map<String,Object>> getAllUploadToMorrisJs();
+
+
+    List<Map<String,Object>> getAllDownloadToMorrisJs();
+
+    Integer getAdminNumber();
+
+    Integer getAllUserNumber();
 }

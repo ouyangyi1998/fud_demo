@@ -6,9 +6,6 @@ File: js
 */
 $(function() {
     "use strict";
-    // ============================================================== 
-    // Our Visitor
-    // ============================================================== 
 
     var chart = c3.generate({
         bindto: '#files',
@@ -40,53 +37,27 @@ $(function() {
             pattern: ['#1aaee1', '#24d2b5', '#6772e5']
         }
     });
-
-    Morris.Area({
-        element: 'upload-download-chart',
-        data: [{
-            year: '2019-01',
-            upload: 5,
-            download: 8
-        }, {
-            year: '2019-02',
-            upload: 13,
-            download: 10
-        }, {
-            year: '2019-03',
-            upload: 8,
-           download: 6
-        }, {
-            year: '2019-04',
-            upload: 7,
-            download: 20
-        }, {
-            year: '2019-05',
-            upload: 18,
-           download: 15
-        }, {
-            year: '2019-06',
-            upload: 10,
-            download: 10
+    $.ajax({
+        url:"/upload/getChart",
+        type:"post",
+        success:function (data) {
+            Morris.Area({
+                element:'upload-download-chart',
+                data:data,
+                xkey: 'days',
+                ykeys: ['upload', 'download'],
+                labels: ['上传', '下载'],
+                pointSize: 0,
+                fillOpacity: 0,
+                pointStrokeColors: ['#20aee3', '#6972e3'],
+                behaveLikeLine: true,
+                gridLineColor: '#e0e0e0',
+                lineWidth: 3,
+                hideHover: 'auto',
+                lineColors: ['#20aee3', '#6972e3'],
+                resize: true
+            });
         },
-            {
-                year: '2019-07',
-                upload: 25,
-                download: 15
-            }
-        ],
-        xkey: 'year',
-        ykeys: ['upload', 'download'],
-        labels: ['上传', '下载'],
-        pointSize: 0,
-        fillOpacity: 0,
-        pointStrokeColors: ['#20aee3', '#6972e3'],
-        behaveLikeLine: true,
-        gridLineColor: '#e0e0e0',
-        lineWidth: 3,
-        hideHover: 'auto',
-        lineColors: ['#20aee3', '#6972e3'],
-        resize: true
-
     });
 
 });

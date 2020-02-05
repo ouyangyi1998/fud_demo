@@ -10,16 +10,11 @@ $(function() {
     // Our Visitor
     // ==============================================================
 
-    var chart = c3.generate({
-        bindto: '#files',
+  /*  var chart = c3.generate({
+        bindto: '#admin',
         data: {
-            columns: [
-                ['Other', 30],
-                ['媒体', 30],
-                ['文档', 40],
-            ],
-
-            type: 'donut',
+            url:"/admin/getC3Chart",
+            type: 'post',
             onclick: function(d, i) { console.log("onclick", d, i); },
             onmouseover: function(d, i) { console.log("onmouseover", d, i); },
             onmouseout: function(d, i) { console.log("onmouseout", d, i); }
@@ -28,7 +23,7 @@ $(function() {
             label: {
                 show: false
             },
-            title: "Files",
+            title: "Admin",
             width: 20,
 
         },
@@ -39,53 +34,63 @@ $(function() {
         color: {
             pattern: ['#1aaee1', '#24d2b5', '#6772e5']
         }
-    });
+    });*/
 
-    Morris.Area({
-        element: 'chart',
-        data: [{
-            year: '2019-01',
-            upload: 5,
-            download: 8
-        }, {
-            year: '2019-02',
-            upload: 13,
-            download: 10
-        }, {
-            year: '2019-03',
-            upload: 8,
-            download: 6
-        }, {
-            year: '2019-04',
-            upload: 7,
-            download: 20
-        }, {
-            year: '2019-05',
-            upload: 18,
-            download: 15
-        }, {
-            year: '2019-06',
-            upload: 10,
-            download: 10
-        },
-            {
-                year: '2019-07',
-                upload: 25,
-                download: 15
+        $.ajax({
+            url:"/admin/getC3Chart",
+            type:"post",
+            success:function (data) {
+                var chart=c3.generate({
+                    bindto:'#admin',
+                    data:{
+                        columns: [
+                            ['user', data['user']],
+                            ['admin', data['admin']],
+                        ],
+                        type: 'donut',
+                        onclick: function(d, i) { console.log("onclick", d, i); },
+                        onmouseover: function(d, i) { console.log("onmouseover", d, i); },
+                        onmouseout: function(d, i) { console.log("onmouseout", d, i); }
+                    },
+                    donut: {
+                        label: {
+                            show: false
+                        },
+                        title: "Admin/User",
+                        width: 20,
+
+                    },
+
+                    legend: {
+                        hide: true
+                    },
+                    color: {
+                        pattern: ['#1aaee1', '#24d2b5']
+                    }
+                });
             }
-        ],
-        xkey: 'year',
-        ykeys: ['upload', 'download'],
-        labels: ['上传', '下载'],
-        pointSize: 0,
-        fillOpacity: 0,
-        pointStrokeColors: ['#20aee3', '#6972e3'],
-        behaveLikeLine: true,
-        gridLineColor: '#e0e0e0',
-        lineWidth: 3,
-        hideHover: 'auto',
-        lineColors: ['#20aee3', '#6972e3'],
-        resize: true
+        })
 
+    $.ajax({
+        url:"/admin/getChart",
+        type:"post",
+        success:function (data) {
+            Morris.Area({
+                element:'chart',
+                data:data,
+                xkey: 'days',
+                ykeys: ['upload', 'download'],
+                labels: ['上传', '下载'],
+                pointSize: 0,
+                fillOpacity: 0,
+                pointStrokeColors: ['#20aee3', '#6972e3'],
+                behaveLikeLine: true,
+                gridLineColor: '#e0e0e0',
+                lineWidth: 3,
+                hideHover: 'auto',
+                lineColors: ['#20aee3', '#6972e3'],
+                resize: true
+            });
+        },
     });
 });
