@@ -150,7 +150,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-<!--                                        <th>#</th>-->
+                                        <th>#</th>
                                         <th>文件名</th>
                                         <th>文件大小</th>
                                         <th>文件类型</th>
@@ -160,7 +160,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="file:${fileList}">
-<!--                                        <td th:text="${file.id}"></td>-->
+                                        <td th:text="${fileStat.count}"></td>
                                         <td th:text="${file.name}"></td>
                                         <td th:text="${file.size}"></td>
                                         <td th:text="${file.suffix}"></td>

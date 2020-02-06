@@ -49,8 +49,11 @@ public interface FileDao {
     * 获取最热门下载
     * @return fileRecord集合
     */
-   List<FileRecord> getMostDownloadRecord();
+   List<FileRecord> getMostDownloadRecordById(Long userId);
 
+
+
+    List<FileRecord> getMostDownloadRecord();
    /**
     * 获取某个用户上传的文件的总下载次数
     * @param userId 用户id
@@ -104,13 +107,13 @@ public interface FileDao {
     * 获取最新上传的前五个文件
     * @return 文件集合
     */
-   List<FileRecord> getLatestUploaded();
+   List<FileRecord> getLatestUploaded(Long userId);
 
    /**
     * 获取最新下载的前五个文件
     * @return 文件集合
     */
-   List<FileRecord> getLatestDownloaded();
+   List<FileRecord> getLatestDownloaded(Long userId);
 
 
 
@@ -122,4 +125,7 @@ public interface FileDao {
 
 
     List<Map<String,Object>> getDownloadToMorrisJs(Long userId);
+
+
+    Long getUploadTimesByCurrUser(Long userId);
 }

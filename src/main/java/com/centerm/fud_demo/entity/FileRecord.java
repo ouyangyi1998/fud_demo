@@ -22,12 +22,12 @@ public class FileRecord {
     private Long downloadTimes;
     private Long userId;
     private String md5;
-    private Timestamp createTime;
+    private String createTime;
     private String suffix;
 
     public FileRecord(){}
 
-    public FileRecord(String name, String localUrl, String size, Long userId, String md5, String suffix, Timestamp createTime) {
+    public FileRecord(String name, String localUrl, String size, Long userId, String md5, String suffix, String createTime) {
         this.name = name;
         this.localUrl = localUrl;
         this.size = size;

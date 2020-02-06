@@ -10,7 +10,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Date createTime;
+    private String createTime;
     private Integer state;
     private String stateName;
     private Integer isOnline;
@@ -26,7 +26,7 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String username, String password, Date createTime, Integer state) {
+    public User(Long id, String username, String password, String createTime, Integer state) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -34,7 +34,7 @@ public class User {
         this.state = state;
     }
 
-    public User(Long id, String username, String password, Date createTime, Integer state, Integer isOnline) {
+    public User(Long id, String username, String password, String createTime, Integer state, Integer isOnline) {
         this.id = id;
         this.username = username;
         this.password = password;

@@ -29,6 +29,10 @@
             var a5=document.getElementById("a5");getColor(a5);
 
             function getColor(x) {
+                if (x==null)
+                {
+                    return false;
+                }
                 x.style.background = 'rgb(' + Math.ceil(Math.random() * 255) + ',' + Math.ceil(Math.random() * 255) + ',' + Math.ceil(Math.random() * 255) + ')';
             }
         });

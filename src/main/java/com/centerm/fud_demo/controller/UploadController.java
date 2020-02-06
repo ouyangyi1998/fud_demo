@@ -1,6 +1,7 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
+import com.centerm.fud_demo.service.DownloadService;
 import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
 import com.centerm.fud_demo.utils.GetDateUtil;
@@ -31,6 +32,8 @@ public class UploadController {
     UploadService uploadService;
     @Autowired
     FileService fileService;
+    @Autowired
+    DownloadService downloadService;
 
     /**
      * 跳转到上传界面
@@ -90,6 +93,7 @@ public class UploadController {
         currUser = (User) request.getSession().getAttribute("user");
         System.out.println("当前用户id为：" +currUser.getId());
         Boolean isSuccess= fileService.deleteFileById(currUser.getId(), fileId);
+        downloadService.deleteDownloadRecord(fileId);
         if (isSuccess==false)
         {
             msg.setFlag(0);

@@ -42,8 +42,8 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public List<FileRecord> getLatestUploaded() {
-        return fileDao.getLatestUploaded();
+    public List<FileRecord> getLatestUploaded(Long userId) {
+        return fileDao.getLatestUploaded(userId);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class UploadServiceImpl implements UploadService {
             log.error(e.getMessage());
         }
         FileRecord fileRecord = new FileRecord(fileName, copyFrom + fileName,
-                fileSize, userId, guid, fileType, new Timestamp(System.currentTimeMillis()));
+                fileSize, userId, guid, fileType, String.valueOf(new Timestamp(System.currentTimeMillis())));
         fileDao.addFile(fileRecord);
         long end = System.currentTimeMillis();
         log.info("backup finished...");
@@ -215,5 +215,8 @@ public class UploadServiceImpl implements UploadService {
         }
     }
 
-
+    @Override
+    public Long getUploadTimesByCurrUser(Long userId) {
+        return fileDao.getUploadTimesByCurrUser(userId);
+    }
 }

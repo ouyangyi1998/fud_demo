@@ -91,16 +91,15 @@ public class UserController {
     {
         currUser = (User)request.getSession().getAttribute("user");
         Long currUserId = currUser.getId();
-        List<FileRecord> mostDownloaded = downloadService.getMostDownloadRecord();
-        Long downloadTimes = downloadService.getDownloadTimes();
+        System.out.println(currUserId);
+        List<FileRecord> mostDownloaded = downloadService.getMostDownloadRecordById(currUserId);
         Long downloadTimesByCurrUser = downloadService.getDownloadTimesByUserId(currUserId);
-        Long uploadTimes = uploadService.getUploadTimes();
-        List<FileRecord> latestDownloaded = downloadService.getLatestDownloaded();
-        List<FileRecord> latestUploaded = uploadService.getLatestUploaded();
+        Long uploadTimesByCurrUser = uploadService.getUploadTimesByCurrUser(currUserId);
+        List<FileRecord> latestDownloaded = downloadService.getLatestDownloaded(currUserId);
+        List<FileRecord> latestUploaded = uploadService.getLatestUploaded(currUserId);
         model.addAttribute("mostDownloaded", mostDownloaded);
         model.addAttribute("downloadTimesByCurrUser", downloadTimesByCurrUser);
-        model.addAttribute("downloadTimes", downloadTimes);
-        model.addAttribute("uploadTimes", uploadTimes);
+        model.addAttribute("uploadTimesByCurrUser", uploadTimesByCurrUser);
         model.addAttribute("latestDownloaded", latestDownloaded);
         model.addAttribute("latestUploaded", latestUploaded);
         return "user/index";

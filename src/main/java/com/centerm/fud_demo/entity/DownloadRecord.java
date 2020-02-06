@@ -12,11 +12,11 @@ import java.util.Date;
 @Data
 public class DownloadRecord {
     private Long id;
-    private Timestamp createTime;
+    private String createTime;
     private Long userId;
     private Long fileId;
 
-    public DownloadRecord(Timestamp createTime, Long userId, Long fileId) {
+    public DownloadRecord(String createTime, Long userId, Long fileId) {
         this.createTime = createTime;
         this.userId = userId;
         this.fileId = fileId;

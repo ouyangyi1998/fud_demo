@@ -33,8 +33,8 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public List<FileRecord> getMostDownloadRecord() {
-        return fileDao.getMostDownloadRecord();
+    public List<FileRecord> getMostDownloadRecordById(Long userId) {
+        return fileDao.getMostDownloadRecordById(userId);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public List<FileRecord> getLatestDownloaded() {
-        return fileDao.getLatestDownloaded();
+    public List<FileRecord> getLatestDownloaded(Long userId) {
+        return fileDao.getLatestDownloaded(userId);
     }
 
     @Override
@@ -81,5 +81,10 @@ public class DownloadServiceImpl implements DownloadService {
             log.error("{}", e);
         }
         log.info("下载成功");
+    }
+
+    @Override
+    public List<FileRecord> getMostDownloadRecord() {
+        return fileDao.getMostDownloadRecord();
     }
 }

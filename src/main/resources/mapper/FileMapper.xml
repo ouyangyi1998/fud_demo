@@ -10,9 +10,10 @@
         WHERE file.id=#{fileId}
     </update>
     <select id="getFileByUserId" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT file.id, file.name, file.size, file.suffix, file.create_time createTime
+        SELECT file.id, file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime
         FROM fud.file
         WHERE fud.file.user_id=#{userId}
+        ORDER BY fud.file.create_time DESC
     </select>
     <insert id="addFile" parameterMap="FileRecord">
         INSERT INTO file(name, local_url, size, user_id, md5, suffix, create_time)
@@ -38,22 +39,25 @@
         SELECT file.id, file.name,file.local_url localUrl, file.create_time createTime
         FROM fud.file
         WHERE id = #{id}
+        ORDER BY fud.file.create_time DESC
     </select>
     <select id="getAllFile" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id, file.name, file.size, file.suffix, file.create_time createTime
         FROM fud.file
+        ORDER BY fud.file.create_time DESC
     </select>
 
-    <select id="getMostDownloadRecord" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT file.name, file.size, file.suffix, file.create_time createTime, file.download_times downloadTimes
+    <select id="getMostDownloadRecordById" resultType="com.centerm.fud_demo.entity.FileRecord" parameterType="long">
+        SELECT file.name, file.size, file.suffix,  date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes
         FROM fud.file
+        WHERE fud.file.user_id=#{id}
         ORDER BY download_times DESC
         LIMIT 0,5
     </select>
     <select id="getDownloadTimesByUserId" parameterType="long" resultType="java.lang.Long">
-        SELECT IFNULL(SUM(file.download_times), 0)
-        FROM fud.file
-        WHERE file.user_id = #{userId}
+        SELECT COUNT(*)
+        FROM fud.download
+        WHERE fud.download.userId = #{userId}
     </select>
     <select id="getDownloadTimes" resultType="java.lang.Long">
         SELECT IFNULL(SUM(file.download_times), 0)
@@ -63,17 +67,18 @@
         SELECT IFNULL(COUNT(*), 0)
         FROM fud.file
     </select>
-    <select id="getLatestUploaded" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT file.name, DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS createTime
+    <select id="getLatestUploaded" resultType="com.centerm.fud_demo.entity.FileRecord" parameterType="long">
+        SELECT file.name,  date_format(fud.file.create_time,'%Y-%m-%d') AS createTime
         FROM fud.file
-        ORDER BY fud.file.create_time
+        WHERE fud.file.user_id=#{id}
+        ORDER BY fud.file.create_time DESC
         LIMIT 0, 5
     </select>
-    <select id="getLatestDownloaded" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT f.name, DATE_FORMAT(d.createTime,'%Y-%m-%d')
+    <select id="getLatestDownloaded" resultType="com.centerm.fud_demo.entity.FileRecord" parameterType="long">
+        SELECT f.name,  date_format(d.createTime,'%Y-%m-%d') AS createTime
         FROM fud.file f, fud.download d
-        WHERE d.fileId=f.id
-        ORDER BY d.createTime
+        WHERE d.fileId=f.id AND f.user_id=#{userId}
+        ORDER BY d.createTime DESC
         LIMIT 0, 5
     </select>
     <select id="getFileLikeContents" resultType="com.centerm.fud_demo.entity.FileRecord">
@@ -98,5 +103,16 @@
           AND DATE( NOW( ) )
         GROUP BY days
         ORDER BY days DESC
+    </select>
+    <select id="getMostDownloadRecord" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.name, file.size, file.suffix,  date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes
+        FROM fud.file
+        ORDER BY download_times DESC
+        LIMIT 0,5
+    </select>
+    <select id="getUploadTimesByCurrUser" resultType="long" parameterType="long">
+        SELECT IFNULL(COUNT(*), 0)
+        FROM fud.file
+        WHERE fud.file.user_id=#{userId}
     </select>
 </mapper>

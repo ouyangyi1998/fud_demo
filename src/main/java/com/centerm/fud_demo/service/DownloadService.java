@@ -31,7 +31,11 @@ public interface DownloadService {
      * 获取该用户文件下载次数最多的前5个
      * @return
      */
-    List<FileRecord> getMostDownloadRecord();
+    List<FileRecord> getMostDownloadRecordById(Long userId);
+
+
+
+    List<FileRecord>getMostDownloadRecord();
 
     /**
      * 根据用户id获取总下载次数
@@ -57,5 +61,5 @@ public interface DownloadService {
      * 获取最新下载文件的前五个
      * @return
      */
-    List<FileRecord> getLatestDownloaded();
+    List<FileRecord> getLatestDownloaded(Long userId);
 }

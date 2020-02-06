@@ -49,5 +49,7 @@ public interface UploadService {
      * 获取最新上传文件的前五个
      * @return
      */
-    List<FileRecord> getLatestUploaded();
+    List<FileRecord> getLatestUploaded(Long userId);
+
+   Long getUploadTimesByCurrUser(Long userId);
 }

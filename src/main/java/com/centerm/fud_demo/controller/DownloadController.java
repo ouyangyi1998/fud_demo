@@ -42,7 +42,7 @@ public class DownloadController {
     public String toDownload(Long id, HttpServletResponse response, HttpServletRequest request){
         downloadService.downloadFile(id, response);
         currUser = (User) request.getSession().getAttribute("user");
-        DownloadRecord downloadRecord = new DownloadRecord(new Timestamp(System.currentTimeMillis()), currUser.getId(), id);
+        DownloadRecord downloadRecord = new DownloadRecord(String.valueOf(new Timestamp(System.currentTimeMillis())), currUser.getId(), id);
         downloadService.addDownloadRecord(downloadRecord);
         fileService.updateFile(id);
         return "user/download";
