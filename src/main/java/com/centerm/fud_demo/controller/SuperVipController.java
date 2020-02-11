@@ -62,7 +62,7 @@ public class SuperVipController {
         }
         DefaultWebSecurityManager securityManager=(DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
         UserRealm userRealm=(UserRealm)securityManager.getRealms().iterator().next();
-        userRealm.clearAllCache();
+        userRealm.getAuthorizationCache().remove(((User)SecurityUtils.getSubject().getPrincipal()).getUsername());
         msg.setFlag(1);
         return msg;
     }

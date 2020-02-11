@@ -190,6 +190,9 @@ public class UserController {
             userService.changePassword(username,password);
             log.info("密码修改成功...");
         }
+        DefaultWebSecurityManager securityManager= (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm=(UserRealm)securityManager.getRealms().iterator().next();
+        userRealm.getAuthenticationCache().remove(((User)SecurityUtils.getSubject().getPrincipal()).getUsername());
         User user=userService.findByUsername(username);
         request.getSession().setAttribute("user",user);
         msg.setFlag(1);

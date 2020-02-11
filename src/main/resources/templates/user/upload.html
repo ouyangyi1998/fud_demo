@@ -21,20 +21,7 @@
     <script th:src="@{/js/sweetalert2.js}"></script>
     <script th:src="@{/js/jquery.js}"></script>
     <script type="text/javascript">
-            function getPath() {
-                var url=null;
-                var fileObj=document.getElementById("i-file").files[0];
-                alert(fileObj);
-                if (window.createObjcectURL != undefined) {
-                    url = window.createOjcectURL(fileObj);
-                } else if (window.URL != undefined) {
-                    url = window.URL.createObjectURL(fileObj);
-                } else if (window.webkitURL != undefined) {
-                    url = window.webkitURL.createObjectURL(fileObj);
-                }
-                alert(url);
-               document.getElementById("i-file").value=url;
-            }
+
 
         function search() {
             event.preventDefault();
@@ -169,9 +156,9 @@
                                     <div class="col-sm-4 control-label">选择文件</div>
                                     <div class="col-sm-6">
                                         <div class="input-group">
-                                            <input id='location' class="form-control" onclick="$('#i-file').click();getPath();">
+                                            <input id='location' class="form-control" onclick="$('#i-file').click();">
                                             <label class="input-group-btn">
-                                                <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();getPath();">
+                                                <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
                                             </label>
                                             <div id="picker">选择文件</div>
                                         </div>

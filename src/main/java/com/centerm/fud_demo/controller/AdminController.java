@@ -127,9 +127,8 @@ public class AdminController {
            log.info("用户 "+username+"　被解除封禁");
        }
         DefaultWebSecurityManager securityManager= (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
-        UserRealm shiroRealm = (UserRealm) securityManager.getRealms().iterator().next();
-        shiroRealm.clearAllCache();
-
+        UserRealm userRealm=(UserRealm)securityManager.getRealms().iterator().next();
+        userRealm.getAuthorizationCache().remove(((User)SecurityUtils.getSubject().getPrincipal()).getUsername());
         msg.setFlag(1);
         return msg;
 
