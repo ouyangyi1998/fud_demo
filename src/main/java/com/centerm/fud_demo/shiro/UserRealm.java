@@ -3,6 +3,7 @@ package com.centerm.fud_demo.shiro;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -28,10 +29,10 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username=(String)principals.getPrimaryPrincipal();
-        log.info("当前用户为：　" + username);
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        log.info("当前用户为：　" + user.getUsername());
         SimpleAuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo();
-        String roleName=userService.findRoles(username);
+        String roleName=userService.findRoles(user.getUsername());
         Set<String> set=new HashSet<>();
         set.add(roleName);
         authorizationInfo.setRoles(set);
@@ -55,7 +56,7 @@ public class UserRealm extends AuthorizingRealm {
             throw new LockedAccountException();
         }
 
-        SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), ByteSource.Util.bytes(user.getUsername()),getName());
+        SimpleAuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user,user.getPassword(), ByteSource.Util.bytes(user.getUsername()),getName());
         return authenticationInfo;
     }
     /**

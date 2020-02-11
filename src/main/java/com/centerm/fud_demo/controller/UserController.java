@@ -10,6 +10,7 @@ import com.centerm.fud_demo.service.DownloadService;
 import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
 import com.centerm.fud_demo.service.UserService;
+import com.centerm.fud_demo.shiro.UserRealm;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -18,6 +19,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +38,8 @@ import java.util.List;
 @RequestMapping("user")
 @Slf4j
 public class UserController {
-
-    User currUser = null;
+    static final String ACCEPT="1";
+    private User currUser = null;
     @Autowired
     UserService userService;
     @Autowired
@@ -55,14 +57,27 @@ public class UserController {
         return "user/upload";
     }
     @GetMapping("information")
-    public String userInformation()
+    public String userInformation(HttpServletRequest request)
     {
+        Subject subject=SecurityUtils.getSubject();
+        User user=(User)subject.getPrincipal();
+        Long uploadTimes=uploadService.getUploadTimesByCurrUser(user.getId());
+        Long downloadTimes=downloadService.getDownloadTimesByUserId(user.getId());
+        request.setAttribute("downloadTimes", downloadTimes);
+        request.setAttribute("uploadTimes", uploadTimes);
         return "user/information";
     }
     @GetMapping("toLogin")
     public String toLogin()
     {
-        return "login";
+        Subject subject=SecurityUtils.getSubject();
+        User user=(User)subject.getPrincipal();
+        if (user==null) {
+            return "login";
+        }else
+        {
+            return "redirect:/user/index";
+        }
     }
     @GetMapping("filemanager")
     public String userFileManager(Model model)
@@ -71,12 +86,6 @@ public class UserController {
         model.addAttribute("fileList", fileRecordList);
         return "user/filemanager";
     }
-
-//    @GetMapping("hotfile")
-//    public String userHotFile()
-//    {
-//        return "user/hotfile";
-//    }
 
     @GetMapping("download")
     public String userDownload(Model model)
@@ -91,7 +100,6 @@ public class UserController {
     {
         currUser = (User)request.getSession().getAttribute("user");
         Long currUserId = currUser.getId();
-        System.out.println(currUserId);
         List<FileRecord> mostDownloaded = downloadService.getMostDownloadRecordById(currUserId);
         Long downloadTimesByCurrUser = downloadService.getDownloadTimesByUserId(currUserId);
         Long uploadTimesByCurrUser = uploadService.getUploadTimesByCurrUser(currUserId);
@@ -116,9 +124,7 @@ public class UserController {
         Subject subject= SecurityUtils.getSubject();
         UsernamePasswordToken token=new UsernamePasswordToken(user.getUsername(),user.getPassword());
 
-        if (!subject.isAuthenticated()) {
             subject.login(token);
-        }
         String exception=(String)request.getAttribute("shiroLoginFailure");
         if (null == exception){
             log.info("用户 " + username + " 登录成功");
@@ -175,12 +181,14 @@ public class UserController {
         if ((password.equals(null)||password.equals("")))
         {
             msg.setFlag(0);
-            msg.setMsg("No Data");
+            msg.setMsg("没有提交数据更新");
+            log.info("没有提交数据更新....");
             return msg;
         }
         if (!(password.equals(null)||password.equals("")))
         {
             userService.changePassword(username,password);
+            log.info("密码修改成功...");
         }
         User user=userService.findByUsername(username);
         request.getSession().setAttribute("user",user);
@@ -194,7 +202,6 @@ public class UserController {
     public ModelAndView logout(HttpServletRequest request)
     {
         Subject subject= SecurityUtils.getSubject();
-        log.info("用户 "+((User)request.getSession().getAttribute("user")).getUsername()+" 登出成功");
         subject.logout();
         ModelAndView mv=new ModelAndView();
         mv.setViewName("login");

@@ -1,4 +1,5 @@
 package com.centerm.fud_demo.controller;
+import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
@@ -40,6 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AdminController {
 
     static final Integer BAN = 1;
+    static final Integer NORMAL=0;
     @Autowired
     AdminService adminService;
     @Autowired
@@ -50,6 +52,8 @@ public class AdminController {
     DownloadService downloadService;
     @Autowired
     UploadService uploadService;
+    @Autowired
+    private BackupService backupService;
 
 
     @GetMapping("file")
@@ -59,6 +63,13 @@ public class AdminController {
         List<FileRecord> fileList=fileService.getAllFile();
         request.setAttribute("fileList",fileList);
         return "admin/filelist";
+    }
+    @GetMapping("backup")
+    @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
+    public String backupList(HttpServletRequest request){
+        List<BackupRecord> backupList = backupService.getAllBackup();
+        request.setAttribute("backupList", backupList);
+        return "admin/backup";
     }
 
     @GetMapping("index")
@@ -83,13 +94,6 @@ public class AdminController {
         User user=(User)request.getSession().getAttribute("user");
         Long userId=user.getId();
         List<User> userList = adminService.getUserExceptAdminAndSuperVIP(userId);
-        for (User currUSer : userList) {
-            if (currUSer.getState().equals(BAN)) {
-                currUSer.setStateName("封禁");
-            }else{
-                currUSer.setStateName("正常");
-            }
-        }
         request.setAttribute("userList",userList);
         return "admin/ban";
     }
@@ -143,6 +147,7 @@ public class AdminController {
         Long fileId=Long.parseLong(request.getParameter("fileId"));
         ModelAndView mv = new ModelAndView();
         Boolean isSuccess=fileService.deleteFile(fileId);
+        downloadService.deleteDownloadRecord(fileId);
         if (isSuccess==false)
         {
             msg.setFlag(0);
@@ -152,6 +157,7 @@ public class AdminController {
         msg.setFlag(1);
         return msg;
     }
+
     @PostMapping("search")
     @ResponseBody
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
@@ -175,13 +181,6 @@ public class AdminController {
     public String Search(HttpServletRequest request)
     {
         List<User> userList= adminService.getUserLikeContents((String) request.getSession().getAttribute("contents"));
-        for (User currUSer : userList) {
-            if (currUSer.getState().equals(BAN)) {
-                currUSer.setStateName("封禁");
-            }else{
-                currUSer.setStateName("正常");
-            }
-        }
         request.setAttribute("userList",userList);
         return "admin/search";
     }
@@ -272,4 +271,20 @@ public class AdminController {
         map.put("admin",(100*admin)/all);
         return map;
     }
+    @PostMapping("deleteBackup")
+    @ResponseBody
+    public AjaxReturnMsg deleteBackup(HttpServletRequest request) {
+        AjaxReturnMsg msg=new AjaxReturnMsg();
+      Long fileId=Long.parseLong(request.getParameter("fileId"));
+      Boolean isSuccess = backupService.deleteBackup(fileId);
+      if (isSuccess==false)
+      {
+          msg.setFlag(0);
+          msg.setMsg("删除失败");
+          return msg;
+      }
+       msg.setFlag(1);
+       return msg;
+    }
+
 }

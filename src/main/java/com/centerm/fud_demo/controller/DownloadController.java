@@ -5,6 +5,7 @@ import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.service.DownloadService;
 import com.centerm.fud_demo.service.FileService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,10 @@ import java.util.Date;
 
 @Controller
 @ResponseBody
+@Slf4j
 @RequestMapping("download")
 public class DownloadController {
-    User currUser = null;
+    private   User currUser = null;
     @Autowired
     DownloadService downloadService;
     @Autowired
@@ -40,9 +42,10 @@ public class DownloadController {
     @ApiOperation("下载文件")
     @GetMapping("toDownload")
     public String toDownload(Long id, HttpServletResponse response, HttpServletRequest request){
-        downloadService.downloadFile(id, response);
         currUser = (User) request.getSession().getAttribute("user");
-        DownloadRecord downloadRecord = new DownloadRecord(String.valueOf(new Timestamp(System.currentTimeMillis())), currUser.getId(), id);
+        log.info("用户: " + currUser.getUsername() + "  下载了文件(id)： " + id);
+        downloadService.downloadFile(id, response);
+        DownloadRecord downloadRecord = new DownloadRecord(currUser.getId(), id);
         downloadService.addDownloadRecord(downloadRecord);
         fileService.updateFile(id);
         return "user/download";

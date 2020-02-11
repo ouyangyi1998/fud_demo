@@ -45,7 +45,6 @@
         function del(e) {
             var get=e.id;
             var id=get.slice(1);
-            alert(id);
             swal({
                 title: 'Delete?',
                 text:　'the account may not login',
@@ -186,6 +185,9 @@
                         <i class="fa fa-window-close-o" style="color: #5fb9ff"></i>
                         <span class="hide-menu">账号封禁</span></a>
                     </li>
+                    </li>
+                    <li > <a class="waves-effect waves-dark" th:href="@{/admin/backup}" aria-expanded="false"><i class="fa fa-reorder" style="color: #a1fd94"></i><span class="hide-menu">备份文件管理</span></a>
+                    </li>
                     <shiro:hasAnyRoles name="SUPERVIP">
                         <li class="active">
                             <a class="waves-effect waves-dark" th:href="@{/supervip/permission}" aria-expanded="false">
@@ -245,11 +247,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user:${userList}">
+                                    <tr th:each="user:${userList}" th:switch="${user.roleId}">
                                         <td th:text="${userStat.index+1}"></td>
                                         <td th:text="${user.username}"></td>
                                         <td th:text="${user.createTime}"></td>
-                                        <td th:text="${user.role}"></td>
+                                        <td th:case="1">USER</td>
+                                        <td th:case="2">ADMIN</td>
                                         <td><a onclick="del(this)" href="javascript:;"  th:id="a+${user.id}">删除</a></td>
                                         <td><a onclick="handle(this)" href="javascript:;"  th:id="${user.id}">操作</a></td>
                                     </tr>

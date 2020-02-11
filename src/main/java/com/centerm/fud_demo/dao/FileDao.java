@@ -1,5 +1,6 @@
 package com.centerm.fud_demo.dao;
 
+import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.DownloadRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import org.apache.ibatis.annotations.Mapper;
@@ -46,13 +47,14 @@ public interface FileDao {
    Boolean addDownloadRecord(DownloadRecord downloadRecord);
 
    /**
-    * 获取最热门下载
+    * 获取用户最热门下载
     * @return fileRecord集合
     */
    List<FileRecord> getMostDownloadRecordById(Long userId);
-
-
-
+   /**
+    * 获取最热门下载
+    * @return fileRecord集合
+    */
     List<FileRecord> getMostDownloadRecord();
    /**
     * 获取某个用户上传的文件的总下载次数
@@ -115,17 +117,69 @@ public interface FileDao {
     */
    List<FileRecord> getLatestDownloaded(Long userId);
 
-
-
+   /**
+    * 搜索文件
+    * @param contents 关键词
+    * @param userId 用户id
+    * @return
+    */
    List<FileRecord> getFileLikeContents(String contents,Long userId);
 
-
+   /**
+    * 给折线图传送用户上传信息
+    * @param userId 用户id
+    * @return
+    */
 
    List<Map<String,Object>> getUploadToMorrisJs(Long userId);
 
+   /**
+    * 给折线图传送用户下载信息
+    * @param userId 用户id
+    * @return
+    */
 
     List<Map<String,Object>> getDownloadToMorrisJs(Long userId);
 
+   /**
+    * 根据用户id搜索上传次数
+    * @param userId 用户id
+    * @return
+    */
 
     Long getUploadTimesByCurrUser(Long userId);
+
+   /**
+    * 获取服务器所有备份文件
+    * @return
+    */
+   List<BackupRecord> getAllBackup();
+
+   /**
+    * 添加备份文件记录
+    * @param backupRecord
+    * @return
+    */
+   Boolean addBackupRecord(BackupRecord backupRecord);
+
+   /**
+    * 获取某一条备份文件
+    * @param fileId
+    * @return
+    */
+   BackupRecord getBackupById(Long fileId);
+
+   /**
+    * 删除备份记录
+    * @param fileId
+    * @return
+    */
+   Boolean deleteBackup(Long fileId);
+
+   /**
+    * 通过文件id获取文件名
+    * @param fileName
+    * @return
+    */
+   Long getFileIdByFileName(String fileName);
 }

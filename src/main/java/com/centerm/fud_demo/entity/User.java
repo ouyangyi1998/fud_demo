@@ -12,10 +12,8 @@ public class User {
     private String password;
     private String createTime;
     private Integer state;
-    private String stateName;
     private Integer isOnline;
     private Long roleId;
-    private String role;
     //salt 为用户名
 
     public User() {

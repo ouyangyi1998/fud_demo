@@ -40,13 +40,6 @@ public class SuperVipController {
     public String permission(ServletRequest request)
     {
         List<User> userList=superVipService.getAllUserExceptSuperVIP();
-        for (User user : userList) {
-            if (user.getRoleId().equals(USER)) {
-                user.setRole("user");
-            }else{
-                user.setRole("admin");
-            }
-        }
         request.setAttribute("userList",userList);
         return "supervip/permission";
     }
@@ -87,7 +80,6 @@ public class SuperVipController {
         superVipService.removeUser(userId);
         msg.setFlag(1);
         return msg;
-
     }
 
 }

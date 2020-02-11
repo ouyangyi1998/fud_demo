@@ -26,7 +26,7 @@ import java.util.*;
 @RequestMapping("upload")
 public class UploadController {
 
-    User currUser = null;
+    private User currUser = null;
 
     @Autowired
     UploadService uploadService;
@@ -41,7 +41,7 @@ public class UploadController {
      */
     @GetMapping("index")
     public String toUpload() {
-        return "uploadbackup";
+        return "user/upload";
     }
 
     /**

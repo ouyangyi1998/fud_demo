@@ -51,5 +51,10 @@ public interface UploadService {
      */
     List<FileRecord> getLatestUploaded(Long userId);
 
+    /**
+     * 获取用户的上传次数
+     * @param userId
+     * @return
+     */
    Long getUploadTimesByCurrUser(Long userId);
 }

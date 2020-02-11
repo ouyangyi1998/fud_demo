@@ -1,5 +1,6 @@
 package com.centerm.fud_demo.service.Impl;
 import com.centerm.fud_demo.dao.FileDao;
+import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
@@ -47,6 +49,11 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
+    public Long getUploadTimesByCurrUser(Long userId) {
+        return fileDao.getUploadTimesByCurrUser(userId);
+    }
+
+    @Override
     public void upload(MultipartFile file, Integer chunk, String guid, Long uploaderId) throws Exception {
         String filePath = uploadPath + "temp" + File.separator + guid;
         File tempFile = new File(filePath);
@@ -71,13 +78,21 @@ public class UploadServiceImpl implements UploadService {
                 raFile.write(buf, 0, length);
             }
         } catch (Exception e) {
-            throw new IOException(e.getMessage());
+            log.error("(upload)Exception: " + e.getMessage());
         } finally {
-            if (inputStream != null) {
-                inputStream.close();
+            if (null != inputStream) {
+                try{
+                    inputStream.close();
+                }catch (Exception e){
+                    log.error("(upload)inputStream: " + e.getMessage());
+                }
             }
-            if (raFile != null) {
-                raFile.close();
+            if (null != raFile) {
+                try{
+                    raFile.close();
+                }catch (Exception e){
+                    log.error("(upload)raFile: " + e.getMessage());
+                }
             }
         }
     }
@@ -86,7 +101,8 @@ public class UploadServiceImpl implements UploadService {
         //分片文件临时目录
         File tempPath = new File(uploadPath + "temp" + File.separator + guid);
         //真实上传路径
-        File realPath = new File(uploadPath + "real");
+        String filePath = uploadPath + "real";
+        File realPath = new File(filePath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
@@ -141,8 +157,11 @@ public class UploadServiceImpl implements UploadService {
                 }
                 log.info("combine finished...");
                 log.info("file name is " + fileName + ", MD5: " + guid);
+                FileRecord fileRecord = new FileRecord(fileName, uploadPath + "real" + File.separator + fileName,
+                        getFormatSize(realFile.length()), userId, guid, fileName.substring(fileName.lastIndexOf(".")));
+                fileDao.addFile(fileRecord);
                 //备份
-                backup(uploadPath + "real" + File.separator, backupPath, fileName, guid);
+                backupFile(filePath + File.separator, backupPath, fileName);
             }
         } catch (Exception e) {
             log.error("combine failed...");
@@ -150,7 +169,7 @@ public class UploadServiceImpl implements UploadService {
         }
     }
 
-    public void backup(String copyFrom, String copyTo, String fileName, String guid){
+    public void backupFile(String copyFrom, String copyTo, String fileName){
         log.info("backup start...");
         long start = System.currentTimeMillis();
         File source = new File(copyFrom + fileName);
@@ -161,8 +180,6 @@ public class UploadServiceImpl implements UploadService {
         if (!source.exists() || !source.isFile()){
             log.error("source doesn't exists or source isn't a file...");
         }
-        String fileSize = String.valueOf(source.length());
-        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
         if (!targetFolder.exists()){
             targetFolder.mkdirs();
         }
@@ -182,17 +199,16 @@ public class UploadServiceImpl implements UploadService {
         }catch (IOException e){
             log.error(e.getMessage());
         }
-        FileRecord fileRecord = new FileRecord(fileName, copyFrom + fileName,
-                fileSize, userId, guid, fileType, String.valueOf(new Timestamp(System.currentTimeMillis())));
-        fileDao.addFile(fileRecord);
-        long end = System.currentTimeMillis();
         log.info("backup finished...");
+        Long fileId = fileDao.getFileIdByFileName(fileName);
+        BackupRecord backupRecord = new BackupRecord(fileId, fileName, copyTo + fileName, userId);
+        fileDao.addBackupRecord(backupRecord);
+        long end = System.currentTimeMillis();
         log.info("backup lasts：" + (end-start) + "ms");
    }
 
     @Override
     public void checkMd5(HttpServletRequest request, HttpServletResponse response) {
-        log.info("checkMd5...");
         //当前分片
         String chunk = request.getParameter("chunk");
         //分片大小
@@ -211,12 +227,35 @@ public class UploadServiceImpl implements UploadService {
                 response.getWriter().write("{\"ifExist\":0}");
             }
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("(checkMD5)IOException: " + e.getMessage());
         }
     }
 
-    @Override
-    public Long getUploadTimesByCurrUser(Long userId) {
-        return fileDao.getUploadTimesByCurrUser(userId);
+
+
+    public String getFormatSize(double size){
+        double kiloByte = size / 1024;
+        if (kiloByte < 1){
+            return size + "Byte(s)";
+        }
+        double megaByte = kiloByte / 1024;
+        if (megaByte < 1){
+            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
+            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
+        }
+
+        double gigaByte = megaByte/1024;
+        if (gigaByte < 1){
+            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
+        }
+
+        double teraBytes = gigaByte / 1024;
+        if (teraBytes < 1){
+            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
+            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
+        }
+        BigDecimal result4 = new BigDecimal(teraBytes);
+        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
 }

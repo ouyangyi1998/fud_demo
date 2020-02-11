@@ -3,6 +3,7 @@ package com.centerm.fud_demo.service.Impl;
 import com.centerm.fud_demo.dao.FileDao;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.service.FileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author sheva
  */
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
 
     @Autowired
@@ -59,11 +61,12 @@ public class FileServiceImpl implements FileService {
 
     private void deleteLocalFile(String localUrl) {
         try{
-            System.out.println("开始删除本地文件: " + localUrl);
+            log.info("开始删除本地文件: " + localUrl);
             File deleteFile = new File(localUrl);
             deleteFile.delete();
+            log.info("删除成功...");
         }catch (Exception e){
-            System.out.println("删除本地文件出错");
+            log.info("删除本地文件出错...");
             e.printStackTrace();
         }
     }

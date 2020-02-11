@@ -17,18 +17,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = UnauthorizedException.class)
-    @ResponseBody
-    public AjaxReturnMsg UnauthorizedExceptionHandler(HttpServletRequest request,UnauthorizedException ex)
+    public String UnauthorizedExceptionHandler(HttpServletRequest request,UnauthorizedException ex)
     {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
-        msg.setFlag(0);
-        msg.setMsg("用户无权限");
-        log.warn("IP"+request.getRemoteAddr()+" 登录失败");
-        return msg;
+
+        log.warn("IP"+request.getRemoteAddr()+" 无权限");
+        return "/user/index";
     }
     @ExceptionHandler(value = UnknownAccountException.class)
     @ResponseBody

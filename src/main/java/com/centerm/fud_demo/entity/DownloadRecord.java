@@ -1,6 +1,8 @@
 package com.centerm.fud_demo.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -18,6 +20,10 @@ public class DownloadRecord {
 
     public DownloadRecord(String createTime, Long userId, Long fileId) {
         this.createTime = createTime;
+        this.userId = userId;
+        this.fileId = fileId;
+    }
+    public DownloadRecord(Long userId, Long fileId) {
         this.userId = userId;
         this.fileId = fileId;
     }

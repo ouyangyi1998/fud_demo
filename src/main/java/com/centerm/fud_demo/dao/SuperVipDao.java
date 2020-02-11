@@ -40,8 +40,6 @@ public interface SuperVipDao {
      */
     List<User> getAllUserExceptSuperVIP();
 
-
-
     /**
      * 移除用户
      * @param userId 用户id

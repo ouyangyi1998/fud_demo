@@ -33,8 +33,10 @@ public interface DownloadService {
      */
     List<FileRecord> getMostDownloadRecordById(Long userId);
 
-
-
+    /**
+     * 获取所有文件下载次数最多的前5个
+     * @return
+     */
     List<FileRecord>getMostDownloadRecord();
 
     /**

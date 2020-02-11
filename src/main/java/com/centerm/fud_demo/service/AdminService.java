@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 管理员服务
+ * @author jerry
+ */
 public interface AdminService {
 
     /**
@@ -30,14 +34,34 @@ public interface AdminService {
      */
     List<User> getUserExceptAdminAndSuperVIP(Long userId);
 
+    /**
+     * 利用关键词搜索用户
+     * @param contents 关键词
+     * @return
+     */
     List<User> getUserLikeContents(String contents);
 
+    /**
+     * 给折线图带去上传文件信息
+     * @return
+     */
     List<Map<String,Object>> getAllUploadToMorrisJs();
 
-
+    /**
+     * 给折线图带去下载文件信息
+     * @return
+     */
     List<Map<String,Object>> getAllDownloadToMorrisJs();
 
+    /**
+     * 获取管理员人数
+     * @return
+     */
     Integer getAdminNumber();
 
+    /**
+     * 获取用户总人数
+     * @return
+     */
     Integer getAllUserNumber();
 }

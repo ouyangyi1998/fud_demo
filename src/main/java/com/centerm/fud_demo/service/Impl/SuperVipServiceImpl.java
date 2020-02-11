@@ -36,7 +36,6 @@ public class SuperVipServiceImpl implements SuperVipService {
         return superVipDao.getAllUserExceptSuperVIP();
     }
 
-
     @Override
     public void removeUser(Long userId) {
         superVipDao.removeUser(userId);
