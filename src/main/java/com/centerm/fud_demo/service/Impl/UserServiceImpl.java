@@ -4,6 +4,7 @@ import com.centerm.fud_demo.dao.UserDao;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.service.UserService;
 import com.centerm.fud_demo.utils.PasswordHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @author jerry
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(String username, String password) {
-        User user=userDao.findByUsername(username);
+        User user = userDao.findByUsername(username);
         user.setPassword(password);
         PasswordHelper.encryptPassword(user);
         userDao.updateUser(user);

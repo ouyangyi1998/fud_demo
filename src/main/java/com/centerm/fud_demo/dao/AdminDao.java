@@ -12,11 +12,7 @@ import java.util.Map;
  */
 @Component
 public interface AdminDao {
-    /**
-     * 获取所有用户
-     * @return
-     */
-    List<User> getAllUser();
+
 
     /**
      * 获取用户状态
@@ -69,11 +65,11 @@ public interface AdminDao {
      * 获取管理员数目
      * @return
      */
-    Integer getAdminNumber();
+    Long getAdminNumber();
 
     /**
      * 获取用户数目
      * @return
      */
-    Integer getAllUserNumber();
+    Long getAllUserNumber();
 }

@@ -1,4 +1,5 @@
 package com.centerm.fud_demo.controller;
+import com.centerm.fud_demo.Constant.Constants;
 import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
@@ -8,8 +9,6 @@ import com.centerm.fud_demo.listener.Listener;
 import com.centerm.fud_demo.service.*;
 import com.centerm.fud_demo.shiro.UserRealm;
 import com.centerm.fud_demo.utils.GetDateUtil;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -40,8 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class AdminController {
 
-    static final Integer BAN = 1;
-    static final Integer NORMAL=0;
+
     @Autowired
     AdminService adminService;
     @Autowired
@@ -108,29 +104,28 @@ public class AdminController {
         User target=userService.findByUsername(username);
         Integer userState = target.getState();
         Long userId=target.getId();
-       if(userState.equals(0))
+       if(Constants.NORMAL.equals(userState))
        {
            //执行账号封禁
            Boolean isSuccess= adminService.banUser(userId);
-           if (isSuccess.equals(0))
+           if (!isSuccess)
            {
                throw new AccountBanException();
            }
-           log.info("用户 "+username+"　被封禁");
+           log.info("User: " + username + "　has been locked...");
        }else {
            //执行账号解锁
            Boolean isSuccess = adminService.releaseUser(userId);
-           if (isSuccess.equals(0))
+           if (!isSuccess)
            {
                throw new AccountBanException();
            }
-           log.info("用户 "+username+"　被解除封禁");
+           log.info("User: "+ username + " has been unlocked...");
        }
         DefaultWebSecurityManager securityManager= (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
         UserRealm shiroRealm = (UserRealm) securityManager.getRealms().iterator().next();
         shiroRealm.clearAllCache();
-
-        msg.setFlag(1);
+        msg.setFlag(Constants.SUCCESS);
         return msg;
 
     }
@@ -139,22 +134,21 @@ public class AdminController {
      * @param
      * @return
      */
-    @ApiOperation("删除文件")
     @PostMapping("toDelete")
     @ResponseBody
     public AjaxReturnMsg toDelete(HttpServletRequest request) {
         AjaxReturnMsg msg=new AjaxReturnMsg();
         Long fileId=Long.parseLong(request.getParameter("fileId"));
-        ModelAndView mv = new ModelAndView();
+        //ModelAndView mv = new ModelAndView();
         Boolean isSuccess=fileService.deleteFile(fileId);
         downloadService.deleteDownloadRecord(fileId);
-        if (isSuccess==false)
+        if (!isSuccess)
         {
-            msg.setFlag(0);
-            msg.setMsg("Delete Fail");
+            msg.setFlag(Constants.FAIL);
+            msg.setMsg("Delete Failed");
             return msg;
         }
-        msg.setFlag(1);
+        msg.setFlag(Constants.SUCCESS);
         return msg;
     }
 
@@ -166,14 +160,15 @@ public class AdminController {
         AjaxReturnMsg msg=new AjaxReturnMsg();
         String contents=request.getParameter("contents");
        List<User> userList= adminService.getUserLikeContents(contents);
-       if (userList==null||userList.isEmpty())
+       if (null == userList || userList.isEmpty())
        {
-           msg.setMsg("未搜索到数据");
-           msg.setFlag(0);
+           msg.setMsg("No data...");
+           msg.setFlag(Constants.FAIL);
            return msg;
        }
-        request.getSession().setAttribute("contents",contents);
-       msg.setFlag(1);
+
+       request.getSession().setAttribute("contents",contents);
+       msg.setFlag(Constants.SUCCESS);
        return msg;
     }
     @GetMapping("search")
@@ -263,27 +258,27 @@ public class AdminController {
     @ResponseBody
     public Map<String,Object> getC3Chart()
     {
-        int all=adminService.getAllUserNumber();
-        int admin=adminService.getAdminNumber();
-        System.out.println(all+"  "+admin);
+        long allUserNumber = adminService.getAllUserNumber();
+        long adminNumber = adminService.getAdminNumber();
+        log.info("Admin number is： " + adminNumber);
         Map<String,Object> map=new HashMap<>();
-        map.put("user",((all-admin)*100)/all);
-        map.put("admin",(100*admin)/all);
+        map.put("user",((allUserNumber - adminNumber) * 100) / allUserNumber);
+        map.put("admin",(100 * adminNumber) / allUserNumber);
         return map;
     }
     @PostMapping("deleteBackup")
     @ResponseBody
     public AjaxReturnMsg deleteBackup(HttpServletRequest request) {
         AjaxReturnMsg msg=new AjaxReturnMsg();
-      Long fileId=Long.parseLong(request.getParameter("fileId"));
-      Boolean isSuccess = backupService.deleteBackup(fileId);
-      if (isSuccess==false)
+        Long fileId=Long.parseLong(request.getParameter("fileId"));
+        Boolean isSuccess = backupService.deleteBackupRecord(fileId);
+      if (!isSuccess)
       {
-          msg.setFlag(0);
-          msg.setMsg("删除失败");
+          msg.setFlag(Constants.FAIL);
+          msg.setMsg("Delete Failed...");
           return msg;
       }
-       msg.setFlag(1);
+       msg.setFlag(Constants.SUCCESS);
        return msg;
     }
 

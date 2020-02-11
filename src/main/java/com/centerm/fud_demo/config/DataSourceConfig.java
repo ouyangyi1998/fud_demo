@@ -24,8 +24,8 @@ import java.util.Properties;
 @MapperScan(basePackages =DataSourceConfig.PACKAGE,sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
 
-    public static final String PACKAGE="com.centerm.fud_demo.dao";
-    public static final String MAPPER_LOCATION="classpath:mapper/*.xml";
+    static final String PACKAGE="com.centerm.fud_demo.dao";
+    static final String MAPPER_LOCATION="classpath:mapper/*.xml";
 
     @Value("${spring.datasource.url}")
     private String url;

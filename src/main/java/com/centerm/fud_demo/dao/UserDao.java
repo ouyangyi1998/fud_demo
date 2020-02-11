@@ -25,11 +25,11 @@ public interface UserDao {
      * 创建用户
      * @param user
      */
-    void createUser(User user);
+    Boolean createUser(User user);
 
     /**
      * 用户信息更新
      * @param user
      */
-    void updateUser(User user);
+    Boolean updateUser(User user);
 }

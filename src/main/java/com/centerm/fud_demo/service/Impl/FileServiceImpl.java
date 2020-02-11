@@ -61,19 +61,19 @@ public class FileServiceImpl implements FileService {
 
     private void deleteLocalFile(String localUrl) {
         try{
-            log.info("开始删除本地文件: " + localUrl);
+            log.info("Start deleting local file: " + localUrl);
             File deleteFile = new File(localUrl);
             deleteFile.delete();
-            log.info("删除成功...");
+            log.info("Delete successfully...");
         }catch (Exception e){
-            log.info("删除本地文件出错...");
-            e.printStackTrace();
+            log.error("Delete Error...");
+            log.error(e.getMessage());
         }
     }
 
     @Override
     public List<FileRecord> getFileLikeContents(String contents,Long userId) {
-        return fileDao.getFileLikeContents("%"+contents+"%",userId);
+        return fileDao.getFileLikeContents("%" + contents + "%", userId);
     }
 
     @Override

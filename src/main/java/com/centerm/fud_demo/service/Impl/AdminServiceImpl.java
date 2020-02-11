@@ -51,12 +51,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer getAdminNumber() {
+    public Long getAdminNumber() {
         return adminDao.getAdminNumber();
     }
 
     @Override
-    public Integer getAllUserNumber() {
+    public Long getAllUserNumber() {
         return adminDao.getAllUserNumber();
     }
 }

@@ -30,13 +30,13 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        log.info("当前用户为：　" + user.getUsername());
+        log.info("Current User is：　" + user.getUsername());
         SimpleAuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo();
         String roleName=userService.findRoles(user.getUsername());
         Set<String> set=new HashSet<>();
         set.add(roleName);
         authorizationInfo.setRoles(set);
-        log.info("当前用户角色名为： " + roleName);
+        log.info("Current permission is： " + roleName);
         return authorizationInfo;
     }
 

@@ -1,21 +1,20 @@
 package com.centerm.fud_demo.controller;
+import com.centerm.fud_demo.Constant.Constants;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.DownloadService;
 import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
 import com.centerm.fud_demo.utils.GetDateUtil;
-import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -23,6 +22,7 @@ import java.util.*;
  * @author sheva
  */
 @Controller
+@Slf4j
 @RequestMapping("upload")
 public class UploadController {
 
@@ -84,23 +84,22 @@ public class UploadController {
      * @param
      * @return
      */
-    @ApiOperation("删除文件")
     @PostMapping("toDelete")
     @ResponseBody
     public AjaxReturnMsg toDelete(HttpServletRequest request) {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
+        AjaxReturnMsg msg = new AjaxReturnMsg();
         Long fileId=Long.parseLong(request.getParameter("fileId"));
         currUser = (User) request.getSession().getAttribute("user");
-        System.out.println("当前用户id为：" +currUser.getId());
-        Boolean isSuccess= fileService.deleteFileById(currUser.getId(), fileId);
+        log.info("Current user id is：" + currUser.getId());
+        Boolean isSuccess = fileService.deleteFileById(currUser.getId(), fileId);
         downloadService.deleteDownloadRecord(fileId);
-        if (isSuccess==false)
+        if (!isSuccess)
         {
-            msg.setFlag(0);
-            msg.setMsg("Delete Fail");
+            msg.setFlag(Constants.FAIL);
+            msg.setMsg("Delete Fail...");
             return msg;
         }
-        msg.setFlag(1);
+        msg.setFlag(Constants.SUCCESS);
         return msg;
     }
     @PostMapping("getChart")

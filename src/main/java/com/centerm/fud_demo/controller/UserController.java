@@ -1,5 +1,5 @@
 package com.centerm.fud_demo.controller;
-
+import com.centerm.fud_demo.Constant.Constants;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
@@ -11,13 +11,10 @@ import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
 import com.centerm.fud_demo.service.UserService;
 import com.centerm.fud_demo.shiro.UserRealm;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -38,7 +34,7 @@ import java.util.List;
 @RequestMapping("user")
 @Slf4j
 public class UserController {
-    static final String ACCEPT="1";
+
     private User currUser = null;
     @Autowired
     UserService userService;
@@ -59,10 +55,10 @@ public class UserController {
     @GetMapping("information")
     public String userInformation(HttpServletRequest request)
     {
-        Subject subject=SecurityUtils.getSubject();
-        User user=(User)subject.getPrincipal();
-        Long uploadTimes=uploadService.getUploadTimesByCurrUser(user.getId());
-        Long downloadTimes=downloadService.getDownloadTimesByUserId(user.getId());
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User)subject.getPrincipal();
+        Long uploadTimes = uploadService.getUploadTimesByCurrUser(user.getId());
+        Long downloadTimes = downloadService.getDownloadTimesByUserId(user.getId());
         request.setAttribute("downloadTimes", downloadTimes);
         request.setAttribute("uploadTimes", uploadTimes);
         return "user/information";
@@ -70,9 +66,9 @@ public class UserController {
     @GetMapping("toLogin")
     public String toLogin()
     {
-        Subject subject=SecurityUtils.getSubject();
-        User user=(User)subject.getPrincipal();
-        if (user==null) {
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User)subject.getPrincipal();
+        if (null == user) {
             return "login";
         }else
         {
@@ -117,21 +113,21 @@ public class UserController {
     @ResponseBody
     public AjaxReturnMsg login(HttpServletRequest request)
     {
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        AjaxReturnMsg msg=new AjaxReturnMsg();
-        User user=new User(username,password);
-        Subject subject= SecurityUtils.getSubject();
-        UsernamePasswordToken token=new UsernamePasswordToken(user.getUsername(),user.getPassword());
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        AjaxReturnMsg msg = new AjaxReturnMsg();
+        User user = new User(username,password);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
 
-            subject.login(token);
+        subject.login(token);
         String exception=(String)request.getAttribute("shiroLoginFailure");
         if (null == exception){
-            log.info("用户 " + username + " 登录成功");
-            User to_index=userService.findByUsername(username);
-            request.getSession().setAttribute("user", to_index);
+            log.info("User: " + username + " login successfully...");
+            User toIndex = userService.findByUsername(username);
+            request.getSession().setAttribute("user", toIndex);
             request.getSession().setAttribute("index",username.substring(0,1).toUpperCase());
-            msg.setFlag(1);
+            msg.setFlag(Constants.SUCCESS);
             msg.setUsername(username);
         }
         return msg;
@@ -140,31 +136,34 @@ public class UserController {
     @ResponseBody
     public AjaxReturnMsg register(HttpServletRequest request)throws Exception
     {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
+        AjaxReturnMsg msg = new AjaxReturnMsg();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String rPassword =request.getParameter("r_password");
+        String rPassword = request.getParameter("r_password");
         String checkBox=request.getParameter("check");
 
         if (null == username || null == password || "" == username || "" == password) {
+            log.warn("Neither username or password inputted...");
             throw new AuthenticationException();
         }
         if (!password.equals(rPassword))
         {
+            log.warn("Password didn't match...");
             throw new PasswordNotEqualsRetypePasswordException();
         }
-        if (("0").equals(checkBox))
+        if (!Constants.ACCEPT.equals(checkBox))
         {
+            log.warn("Please check the agreement...");
             throw new NotAcceptTermsException();
         }
-        User user=new User(username,password);
-        User matching=userService.findByUsername(username);
+        User user = new User(username,password);
+        User matching = userService.findByUsername(username);
         if (null == matching)
         {
             userService.createUser(user);
-            log.info("用户 "+username+" 注册成功"+",默认权限为user");
+            log.info("User: " + username+" register successfully" + ", default permission is : USER");
             msg.setUsername(username);
-            msg.setFlag(1);
+            msg.setFlag(Constants.SUCCESS);
         }else
         {
             throw new UsernameRepeatingException();
@@ -176,24 +175,27 @@ public class UserController {
     @ResponseBody
     public AjaxReturnMsg updateUser(HttpServletRequest request){
         AjaxReturnMsg msg=new AjaxReturnMsg();
-        String password=request.getParameter("password");
+        String password = request.getParameter("password");
         String username=((User)request.getSession().getAttribute("user")).getUsername();
-        if ((password.equals(null)||password.equals("")))
+        if ((null == password || ("").equals(password)))
         {
-            msg.setFlag(0);
-            msg.setMsg("没有提交数据更新");
-            log.info("没有提交数据更新....");
+            msg.setFlag(Constants.FAIL);
+            msg.setMsg("No data submitted...");
+            log.warn("No data submitted...");
             return msg;
         }
-        if (!(password.equals(null)||password.equals("")))
+        if (!(null == password || ("").equals(password)))
         {
             userService.changePassword(username,password);
-            log.info("密码修改成功...");
+            log.info("Password updated successfully...");
         }
-        User user=userService.findByUsername(username);
+        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
+        UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+        userRealm.getAuthenticationCache().remove(((User) SecurityUtils.getSubject().getPrincipal()).getUsername());
+        User user = userService.findByUsername(username);
         request.getSession().setAttribute("user",user);
-        msg.setFlag(1);
-        msg.setMsg("数据更新成功");
+        msg.setFlag(Constants.SUCCESS);
+        msg.setMsg("Data update successfully...");
         return msg;
     }
 
@@ -214,15 +216,15 @@ public class UserController {
         AjaxReturnMsg msg=new AjaxReturnMsg();
         String contents=request.getParameter("contents");
         Long userId=((User)request.getSession().getAttribute("user")).getId();
-        List<FileRecord> fileList= fileService.getFileLikeContents(contents,userId);
-        if (fileList==null||fileList.isEmpty())
+        List<FileRecord> fileList = fileService.getFileLikeContents(contents,userId);
+        if (null == fileList || fileList.isEmpty())
         {
-            msg.setMsg("未搜索到数据");
-            msg.setFlag(0);
+            msg.setMsg("No data matched...");
+            msg.setFlag(Constants.FAIL);
             return msg;
         }
         request.getSession().setAttribute("contents",contents);
-        msg.setFlag(1);
+        msg.setFlag(Constants.SUCCESS);
         return msg;
     }
     @GetMapping("search")

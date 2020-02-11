@@ -57,11 +57,11 @@ public interface AdminService {
      * 获取管理员人数
      * @return
      */
-    Integer getAdminNumber();
+    Long getAdminNumber();
 
     /**
      * 获取用户总人数
      * @return
      */
-    Integer getAllUserNumber();
+    Long getAllUserNumber();
 }

@@ -67,6 +67,7 @@ public class UploadServiceImpl implements UploadService {
             chunk = 0;
         }
         try {
+            log.info("Uploading....");
             File dirFile = new File(filePath, String.valueOf(chunk));
             //以读写的方式打开目标文件
             raFile = new RandomAccessFile(dirFile, "rw");
@@ -100,77 +101,94 @@ public class UploadServiceImpl implements UploadService {
     public void combineBlock(String guid, String fileName) {
         //分片文件临时目录
         File tempPath = new File(uploadPath + "temp" + File.separator + guid);
+        String prefix = fileName.substring(0, fileName.lastIndexOf("."));
+        String suffix = fileName.substring(fileName.lastIndexOf("."));
+        String finalName = prefix + "." + userId;
         //真实上传路径
         String filePath = uploadPath + "real";
         File realPath = new File(filePath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
-        File realFile = new File(uploadPath + "real" + File.separator + fileName);
+        File realFile = new File(uploadPath + "real" + File.separator + finalName + suffix);
         // 文件追加写入
         FileOutputStream os = null;
         FileChannel fcin = null;
         FileChannel fcout = null;
         try {
-            log.info("combine block start...");
-            log.info("file name is " + fileName + ", MD5: " + guid);
-            os = new FileOutputStream(realFile, true);
-            fcout = os.getChannel();
-            if (tempPath.exists()) {
-                //获取临时目录下的所有文件
-                File[] tempFiles = tempPath.listFiles();
-                //按名称排序
-                Arrays.sort(tempFiles, (o1, o2) -> {
-                    if (Integer.parseInt(o1.getName()) < Integer.parseInt(o2.getName())) {
-                        return -1;
-                    }
-                    if (Integer.parseInt(o1.getName()) == Integer.parseInt(o2.getName())) {
-                        return 0;
-                    }
-                    return 1;
-                });
-                //每次读取10MB大小，字节读取
-                //byte[] byt = new byte[10 * 1024 * 1024];
-                //int len;
-                //设置缓冲区为10MB
-                ByteBuffer buffer = ByteBuffer.allocate(10 * 1024 * 1024);
-                for (int i = 0; i < tempFiles.length; i++) {
-                    FileInputStream fis = new FileInputStream(tempFiles[i]);
-                    fcin = fis.getChannel();
-                    if (fcin.read(buffer) != -1) {
-                        buffer.flip();
-                        while (buffer.hasRemaining()) {
-                            fcout.write(buffer);
+            log.info("Combining....");
+            Long fileId = fileDao.getFileIdByFileName(finalName);
+            if (null == fileId){
+                log.info("File didn't exist in database...");
+                log.info("Combine block start...");
+                log.info("File name is " + fileName + ", MD5: " + guid);
+                os = new FileOutputStream(realFile, true);
+                fcout = os.getChannel();
+                if (tempPath.exists()) {
+                    //获取临时目录下的所有文件
+                    File[] tempFiles = tempPath.listFiles();
+                    //按名称排序
+                    Arrays.sort(tempFiles, (o1, o2) -> {
+                        if (Integer.parseInt(o1.getName()) < Integer.parseInt(o2.getName())) {
+                            return -1;
                         }
+                        if (Integer.parseInt(o1.getName()) == Integer.parseInt(o2.getName())) {
+                            return 0;
+                        }
+                        return 1;
+                    });
+                    //每次读取10MB大小，字节读取
+                    //byte[] byt = new byte[10 * 1024 * 1024];
+                    //int len;
+                    //设置缓冲区为10MB
+                    ByteBuffer buffer = ByteBuffer.allocate(10 * 1024 * 1024);
+                    for (int i = 0; i < tempFiles.length; i++) {
+                        FileInputStream fis = new FileInputStream(tempFiles[i]);
+                        fcin = fis.getChannel();
+                        if (fcin.read(buffer) != -1) {
+                            buffer.flip();
+                            while (buffer.hasRemaining()) {
+                                fcout.write(buffer);
+                            }
+                        }
+                        buffer.clear();
+                        fis.close();
+                        //删除分片
+                        tempFiles[i].delete();
                     }
-                    buffer.clear();
-                    fis.close();
-                    //删除分片
+                    os.close();
+                    //删除临时目录
+                    if (tempPath.isDirectory() && tempPath.exists()) {
+                        // 回收资源
+                        System.gc();
+                        tempPath.delete();
+                    }
+                    log.info("Combine finished...");
+                    log.info("File name is " + fileName + ", MD5: " + guid);
+                    FileRecord fileRecord = new FileRecord(finalName, uploadPath + "real" + File.separator + finalName + suffix,
+                            getFormatSize(realFile.length()), userId, guid, fileName.substring(fileName.lastIndexOf(".")));
+                    fileDao.addFile(fileRecord);
+                    backupFile(filePath + File.separator, backupPath, finalName + suffix, guid);
+                }
+            }else{
+                log.info("File already exists...");
+                File[] tempFiles = tempPath.listFiles();
+                for (int i = 0; i < tempFiles.length; i++) {
                     tempFiles[i].delete();
                 }
-                os.close();
-                //删除临时目录
-                if (tempPath.isDirectory() && tempPath.exists()) {
-                    // 回收资源
-                    System.gc();
-                    tempPath.delete();
-                }
-                log.info("combine finished...");
-                log.info("file name is " + fileName + ", MD5: " + guid);
-                FileRecord fileRecord = new FileRecord(fileName, uploadPath + "real" + File.separator + fileName,
-                        getFormatSize(realFile.length()), userId, guid, fileName.substring(fileName.lastIndexOf(".")));
-                fileDao.addFile(fileRecord);
-                //备份
-                backupFile(filePath + File.separator, backupPath, fileName);
+                System.gc();
+                tempPath.delete();
             }
+
         } catch (Exception e) {
-            log.error("combine failed...");
+            log.error("Combine failed...");
             log.error(e.getMessage());
         }
     }
-
-    public void backupFile(String copyFrom, String copyTo, String fileName){
-        log.info("backup start...");
+    public void backupFile(String copyFrom, String copyTo, String fileName, String guid){
+        log.info("Backup start... File name is : " + fileName);
+        String prefix = fileName.substring(0, fileName.lastIndexOf("."));
+        String suffix = fileName.substring(fileName.lastIndexOf("."));
         long start = System.currentTimeMillis();
         File source = new File(copyFrom + fileName);
         File target = new File(copyTo + fileName);
@@ -178,7 +196,7 @@ public class UploadServiceImpl implements UploadService {
         FileInputStream in = null;
         FileOutputStream out = null;
         if (!source.exists() || !source.isFile()){
-            log.error("source doesn't exists or source isn't a file...");
+            log.error("Source doesn't exists or source isn't a file...");
         }
         if (!targetFolder.exists()){
             targetFolder.mkdirs();
@@ -200,8 +218,8 @@ public class UploadServiceImpl implements UploadService {
             log.error(e.getMessage());
         }
         log.info("backup finished...");
-        Long fileId = fileDao.getFileIdByFileName(fileName);
-        BackupRecord backupRecord = new BackupRecord(fileId, fileName, copyTo + fileName, userId);
+        Long fileId = fileDao.getFileIdByFileName(fileName.substring(0, fileName.lastIndexOf(".")));
+        BackupRecord backupRecord = new BackupRecord(fileId, prefix, copyTo + fileName, userId, guid, suffix);
         fileDao.addBackupRecord(backupRecord);
         long end = System.currentTimeMillis();
         log.info("backup lasts：" + (end-start) + "ms");

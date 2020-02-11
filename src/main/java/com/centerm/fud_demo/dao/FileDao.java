@@ -48,6 +48,7 @@ public interface FileDao {
 
    /**
     * 获取用户最热门下载
+    * @param userId 用户id
     * @return fileRecord集合
     */
    List<FileRecord> getMostDownloadRecordById(Long userId);
@@ -174,7 +175,7 @@ public interface FileDao {
     * @param fileId
     * @return
     */
-   Boolean deleteBackup(Long fileId);
+   Boolean deleteBackupRecord(Long fileId);
 
    /**
     * 通过文件id获取文件名
@@ -182,4 +183,11 @@ public interface FileDao {
     * @return
     */
    Long getFileIdByFileName(String fileName);
+
+   /**
+    * 根据md5查找备份记录
+    * @param md5
+    * @return
+    */
+   BackupRecord getBackupIdByMd5(String md5);
 }
