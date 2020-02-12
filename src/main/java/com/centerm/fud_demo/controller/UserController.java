@@ -1,5 +1,5 @@
 package com.centerm.fud_demo.controller;
-import com.centerm.fud_demo.Constant.Constants;
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
@@ -37,13 +37,13 @@ public class UserController {
 
     private User currUser = null;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    DownloadService downloadService;
+    private DownloadService downloadService;
     @Autowired
-    UploadService uploadService;
+    private UploadService uploadService;
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @GetMapping("toRegister")
     public String toRegister(){return "register";}
@@ -187,7 +187,7 @@ public class UserController {
         if (!(null == password || ("").equals(password)))
         {
             userService.changePassword(username,password);
-            log.info("Password updated successfully...");
+            log.info("Password update successfully...");
         }
         DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
         UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();

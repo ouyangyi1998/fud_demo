@@ -1,5 +1,6 @@
 package com.centerm.fud_demo.shiro;
 
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         log.info("Current User is：　" + user.getUsername());
-        SimpleAuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo();
-        String roleName=userService.findRoles(user.getUsername());
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        String roleName = userService.findRoles(user.getUsername());
         Set<String> set=new HashSet<>();
         set.add(roleName);
         authorizationInfo.setRoles(set);
@@ -51,7 +52,7 @@ public class UserRealm extends AuthorizingRealm {
         {
             throw new UnknownAccountException();
         }
-        if (user.getState().equals(1))
+        if (user.getState().equals(Constants.BAN))
         {
             throw new LockedAccountException();
         }

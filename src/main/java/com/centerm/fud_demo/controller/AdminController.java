@@ -1,5 +1,5 @@
 package com.centerm.fud_demo.controller;
-import com.centerm.fud_demo.Constant.Constants;
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
@@ -36,18 +36,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequestMapping("admin")
 @Slf4j
 public class AdminController {
-
-
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
     @Autowired
-    FileService fileService;
+    private FileService fileService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    DownloadService downloadService;
+    private DownloadService downloadService;
     @Autowired
-    UploadService uploadService;
+    private UploadService uploadService;
     @Autowired
     private BackupService backupService;
 
@@ -87,8 +85,8 @@ public class AdminController {
     @GetMapping("ban")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
     public String adminBan(HttpServletRequest request) {
-        User user=(User)request.getSession().getAttribute("user");
-        Long userId=user.getId();
+        User user = (User)request.getSession().getAttribute("user");
+        Long userId = user.getId();
         List<User> userList = adminService.getUserExceptAdminAndSuperVIP(userId);
         request.setAttribute("userList",userList);
         return "admin/ban";
@@ -99,8 +97,8 @@ public class AdminController {
     @ResponseBody
     public AjaxReturnMsg banUser(HttpServletRequest request) throws AccountBanException
     {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
-        String username=request.getParameter("username");
+        AjaxReturnMsg msg = new AjaxReturnMsg();
+        String username = request.getParameter("username");
         User target=userService.findByUsername(username);
         Integer userState = target.getState();
         Long userId=target.getId();
@@ -138,7 +136,7 @@ public class AdminController {
     @ResponseBody
     public AjaxReturnMsg toDelete(HttpServletRequest request) {
         AjaxReturnMsg msg=new AjaxReturnMsg();
-        Long fileId=Long.parseLong(request.getParameter("fileId"));
+        Long fileId = Long.parseLong(request.getParameter("fileId"));
         //ModelAndView mv = new ModelAndView();
         Boolean isSuccess=fileService.deleteFile(fileId);
         downloadService.deleteDownloadRecord(fileId);
@@ -158,24 +156,24 @@ public class AdminController {
     public AjaxReturnMsg search(HttpServletRequest request)
     {
         AjaxReturnMsg msg=new AjaxReturnMsg();
-        String contents=request.getParameter("contents");
-       List<User> userList= adminService.getUserLikeContents(contents);
-       if (null == userList || userList.isEmpty())
-       {
-           msg.setMsg("No data...");
-           msg.setFlag(Constants.FAIL);
-           return msg;
-       }
+        String contents = request.getParameter("contents");
+        List<User> userList= adminService.getUserLikeContents(contents);
+        if (null == userList || userList.isEmpty())
+        {
+            msg.setMsg("No data...");
+            msg.setFlag(Constants.FAIL);
+            return msg;
+        }
 
-       request.getSession().setAttribute("contents",contents);
-       msg.setFlag(Constants.SUCCESS);
-       return msg;
+        request.getSession().setAttribute("contents",contents);
+        msg.setFlag(Constants.SUCCESS);
+        return msg;
     }
     @GetMapping("search")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
     public String Search(HttpServletRequest request)
     {
-        List<User> userList= adminService.getUserLikeContents((String) request.getSession().getAttribute("contents"));
+        List<User> userList = adminService.getUserLikeContents((String) request.getSession().getAttribute("contents"));
         request.setAttribute("userList",userList);
         return "admin/search";
     }
@@ -272,14 +270,14 @@ public class AdminController {
         AjaxReturnMsg msg=new AjaxReturnMsg();
         Long fileId=Long.parseLong(request.getParameter("fileId"));
         Boolean isSuccess = backupService.deleteBackupRecord(fileId);
-      if (!isSuccess)
-      {
-          msg.setFlag(Constants.FAIL);
-          msg.setMsg("Delete Failed...");
-          return msg;
-      }
-       msg.setFlag(Constants.SUCCESS);
-       return msg;
-    }
+        if (!isSuccess)
+        {
+            msg.setFlag(Constants.FAIL);
+            msg.setMsg("Delete Failed...");
+            return msg;
+        }
+        msg.setFlag(Constants.SUCCESS);
+        return msg;
+        }
 
 }

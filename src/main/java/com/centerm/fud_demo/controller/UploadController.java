@@ -1,5 +1,5 @@
 package com.centerm.fud_demo.controller;
-import com.centerm.fud_demo.Constant.Constants;
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.DownloadService;
@@ -29,11 +29,11 @@ public class UploadController {
     private User currUser = null;
 
     @Autowired
-    UploadService uploadService;
+    private UploadService uploadService;
     @Autowired
-    FileService fileService;
+    private FileService fileService;
     @Autowired
-    DownloadService downloadService;
+    private DownloadService downloadService;
 
     /**
      * 跳转到上传界面

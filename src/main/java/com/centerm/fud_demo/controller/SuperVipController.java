@@ -1,5 +1,5 @@
 package com.centerm.fud_demo.controller;
-import com.centerm.fud_demo.Constant.Constants;
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.SuperVipService;
@@ -28,7 +28,7 @@ import java.util.List;
 public class SuperVipController {
 
     @Autowired
-    SuperVipService superVipService;
+    private SuperVipService superVipService;
 
     @GetMapping("permission")
     @RequiresRoles(value = "SUPERVIP")

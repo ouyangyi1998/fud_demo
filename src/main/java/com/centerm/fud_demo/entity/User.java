@@ -13,7 +13,7 @@ public class User {
     private String createTime;
     private Integer state;
     private Integer isOnline;
-    private Long roleId;
+    private Integer roleId;
     //salt 为用户名
 
     public User() {

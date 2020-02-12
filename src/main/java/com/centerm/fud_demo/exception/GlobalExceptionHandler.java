@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public String UnauthorizedExceptionHandler(HttpServletRequest request,UnauthorizedException ex)
     {
 
-        log.warn("IP"+request.getRemoteAddr()+" 无权限");
+        log.warn("IP:"+request.getRemoteAddr()+" 无权限");
         return "/user/index";
     }
     @ExceptionHandler(value = UnknownAccountException.class)
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         AjaxReturnMsg msg=new AjaxReturnMsg();
         msg.setFlag(0);
         msg.setMsg("用户名密码错误");
-        log.warn("IP"+request.getRemoteAddr()+" 登录失败"+",原因：用户名密码错误");
+        log.warn("IP: "+request.getRemoteAddr()+" 登录失败"+",原因：用户名密码错误");
         return msg;
     }
     @ExceptionHandler(value = IncorrectCredentialsException.class)

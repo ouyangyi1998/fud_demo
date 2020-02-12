@@ -103,7 +103,7 @@ public class UploadServiceImpl implements UploadService {
         File tempPath = new File(uploadPath + "temp" + File.separator + guid);
         String prefix = fileName.substring(0, fileName.lastIndexOf("."));
         String suffix = fileName.substring(fileName.lastIndexOf("."));
-        String finalName = prefix + "." + userId;
+        String finalName = prefix + "." + userId + guid;
         //真实上传路径
         String filePath = uploadPath + "real";
         File realPath = new File(filePath);
@@ -171,7 +171,7 @@ public class UploadServiceImpl implements UploadService {
                     backupFile(filePath + File.separator, backupPath, finalName + suffix, guid);
                 }
             }else{
-                log.info("File already exists...");
+                log.info("File already existed...");
                 File[] tempFiles = tempPath.listFiles();
                 for (int i = 0; i < tempFiles.length; i++) {
                     tempFiles[i].delete();
@@ -186,7 +186,8 @@ public class UploadServiceImpl implements UploadService {
         }
     }
     public void backupFile(String copyFrom, String copyTo, String fileName, String guid){
-        log.info("Backup start... File name is : " + fileName);
+        log.info("Backup start...");
+        log.info("File name is: " + fileName);
         String prefix = fileName.substring(0, fileName.lastIndexOf("."));
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         long start = System.currentTimeMillis();
@@ -217,12 +218,12 @@ public class UploadServiceImpl implements UploadService {
         }catch (IOException e){
             log.error(e.getMessage());
         }
-        log.info("backup finished...");
+        log.info("Backup finished...");
         Long fileId = fileDao.getFileIdByFileName(fileName.substring(0, fileName.lastIndexOf(".")));
         BackupRecord backupRecord = new BackupRecord(fileId, prefix, copyTo + fileName, userId, guid, suffix);
         fileDao.addBackupRecord(backupRecord);
         long end = System.currentTimeMillis();
-        log.info("backup lasts：" + (end-start) + "ms");
+        log.info("Backup lasts：" + (end-start) + "ms");
    }
 
     @Override

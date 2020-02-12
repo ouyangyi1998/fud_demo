@@ -22,5 +22,3 @@ public class AccountBanException extends Exception {
     }
 }
 
-
-//~ Formatted by Jindent --- http://www.jindent.com

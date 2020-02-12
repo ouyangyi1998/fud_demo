@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 public class DownloadController {
     private   User currUser = null;
     @Autowired
-    DownloadService downloadService;
+    private DownloadService downloadService;
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     /**
      * @param id 文件id

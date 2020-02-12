@@ -1678,7 +1678,7 @@
     <column id="358" parent="242" name="id">
       <Position>1</Position>
       <Comment>用户角色id</Comment>
-      <DataType>bigint(20)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -1736,7 +1736,7 @@
     </column>
     <column id="366" parent="243" name="role_id">
       <Position>6</Position>
-      <DataType>bigint(20)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="367" parent="243" name="PRIMARY">
