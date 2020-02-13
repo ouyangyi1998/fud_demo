@@ -1,3 +1,5 @@
+## 1.方向汇总
+
 - 项目使用的框架或者插件
   - 后端方向：SpringBoot，Mybatis，PageHelper，Swagger2，Ehcache，Shiro，FastJson
   - 数据库方向：MySQL，Druid
