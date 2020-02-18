@@ -22,26 +22,19 @@ public class FileRecord {
     private Long downloadTimes;
     private Long userId;
     private String md5;
-    private String createTime;
+    private Timestamp createTime;
     private String suffix;
+    private String backupUrl;
 
     public FileRecord(){}
 
-    public FileRecord(String name, String localUrl, String size, Long userId, String md5, String suffix, String createTime) {
+    public FileRecord(String name, String localUrl, String size, Long userId, String md5, String suffix, String backupUrl) {
         this.name = name;
         this.localUrl = localUrl;
         this.size = size;
         this.userId = userId;
         this.md5 = md5;
         this.suffix = suffix;
-        this.createTime = createTime;
-    }
-    public FileRecord(String name, String localUrl, String size, Long userId, String md5, String suffix) {
-        this.name = name;
-        this.localUrl = localUrl;
-        this.size = size;
-        this.userId = userId;
-        this.md5 = md5;
-        this.suffix = suffix;
+        this.backupUrl = backupUrl;
     }
 }

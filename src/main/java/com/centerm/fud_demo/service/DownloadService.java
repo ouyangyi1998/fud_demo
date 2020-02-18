@@ -61,6 +61,7 @@ public interface DownloadService {
 
     /**
      * 获取最新下载文件的前五个
+     * @param userId 用户id
      * @return
      */
     List<FileRecord> getLatestDownloaded(Long userId);

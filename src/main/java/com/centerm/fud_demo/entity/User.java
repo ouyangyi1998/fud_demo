@@ -1,10 +1,12 @@
 package com.centerm.fud_demo.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Date;
 
+/**
+ * 用户实体类
+ * @author jerry
+ */
 @Data
 public class User {
     private Long id;

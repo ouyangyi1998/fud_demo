@@ -133,10 +133,6 @@
                     <shiro:hasAnyRoles name="SUPERVIP,ADMIN">
                     <li> <a class="waves-effect waves-dark" th:href="@{/admin/ban}" aria-expanded="false"><i class="fa fa-window-close-o" style="color: #5fb9ff"></i><span class="hide-menu">账号封禁</span></a>
                     </li>
-                        <shiro:hasAnyRoles name="SUPERVIP,ADMIN">
-                        <li > <a class="waves-effect waves-dark" th:href="@{/admin/backup}" aria-expanded="false"><i class="fa fa-reorder" style="color: #a1fd94"></i><span class="hide-menu">备份文件管理</span></a>
-                        </li>
-                        </shiro:hasAnyRoles>
                     </shiro:hasAnyRoles>
                     <shiro:hasAnyRoles name="SUPERVIP">
                         <li> <a class="waves-effect waves-dark" th:href="@{/supervip/permission}" aria-expanded="false"><i class="fa fa-user-plus" style="color: #9fff53"></i><span class="hide-menu">授权管理员</span></a>

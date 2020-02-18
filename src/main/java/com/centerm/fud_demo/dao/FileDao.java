@@ -1,9 +1,7 @@
 package com.centerm.fud_demo.dao;
 
-import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.DownloadRecord;
 import com.centerm.fud_demo.entity.FileRecord;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,16 +22,18 @@ public interface FileDao {
    List<FileRecord> getFileByUserId(Long userId);
    /**
     * 添加文件
-    * @param file 文件实体
+    * @param fileRecord 文件实体
     * @return 文件
     */
-   Boolean addFile(FileRecord file);
+   Boolean addFileRecord(FileRecord fileRecord);
    /**
     * 根据id获取文件
     * @param id  文件id
     * @return
     */
    FileRecord getFileById(Long id);
+
+   FileRecord getFileByName(String fileName);
    /**
     * 获取所有文件
     * @return
@@ -91,6 +91,13 @@ public interface FileDao {
     */
    Boolean deleteFile(Long fileId);
 
+   /**
+    * 根据文件名删除文件
+    * @param filePath 文件路径
+    * @return
+    */
+   void deleteFileByPath(String filePath);
+
 
    /**
     * 更新文件信息（下载次数）
@@ -98,6 +105,15 @@ public interface FileDao {
     * @return
     */
    Boolean updateFile(Long fileId);
+
+   /**
+    * 更新文件记录
+    * @param fileId 文件id
+    * @param fileSize  文件大小
+    * @param fileMd5 文件md5
+    * @return
+    */
+   Boolean updateFileRecord(Long fileId, String fileSize, String fileMd5);
 
    /**
     * 删除下载信息
@@ -108,12 +124,14 @@ public interface FileDao {
 
    /**
     * 获取最新上传的前五个文件
+    * @param userId 用户id
     * @return 文件集合
     */
    List<FileRecord> getLatestUploaded(Long userId);
 
    /**
     * 获取最新下载的前五个文件
+    * @param userId 用户id
     * @return 文件集合
     */
    List<FileRecord> getLatestDownloaded(Long userId);
@@ -150,44 +168,16 @@ public interface FileDao {
 
     Long getUploadTimesByCurrUser(Long userId);
 
-   /**
-    * 获取服务器所有备份文件
-    * @return
-    */
-   List<BackupRecord> getAllBackup();
 
-   /**
-    * 添加备份文件记录
-    * @param backupRecord
-    * @return
-    */
-   Boolean addBackupRecord(BackupRecord backupRecord);
-
-   /**
-    * 获取某一条备份文件
-    * @param fileId
-    * @return
-    */
-   BackupRecord getBackupById(Long fileId);
-
-   /**
-    * 删除备份记录
-    * @param fileId
-    * @return
-    */
-   Boolean deleteBackupRecord(Long fileId);
 
    /**
     * 通过文件id获取文件名
-    * @param fileName
+    * @param localUrl
     * @return
     */
+   Long getFileIdByUrl(String localUrl);
+
    Long getFileIdByFileName(String fileName);
 
-   /**
-    * 根据md5查找备份记录
-    * @param md5
-    * @return
-    */
-   BackupRecord getBackupIdByMd5(String md5);
+   String getFileBackupUrl(String filePath);
 }

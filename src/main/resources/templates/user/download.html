@@ -161,7 +161,7 @@
                                     <tbody>
                                     <tr th:each="file:${fileList}">
                                         <td th:text="${fileStat.count}"></td>
-                                        <td th:text="${#strings.substring(file.name, 0, file.name.lastIndexOf('.'))}"></td>
+                                        <td th:text="${file.name}"></td>
                                         <td th:text="${file.size}"></td>
                                         <td th:text="${file.suffix}"></td>
                                         <td th:text="${file.createTime}"></td>

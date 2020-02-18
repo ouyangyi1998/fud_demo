@@ -14,15 +14,10 @@ import java.util.Date;
 @Data
 public class DownloadRecord {
     private Long id;
-    private String createTime;
+    private Timestamp createTime;
     private Long userId;
     private Long fileId;
 
-    public DownloadRecord(String createTime, Long userId, Long fileId) {
-        this.createTime = createTime;
-        this.userId = userId;
-        this.fileId = fileId;
-    }
     public DownloadRecord(Long userId, Long fileId) {
         this.userId = userId;
         this.fileId = fileId;

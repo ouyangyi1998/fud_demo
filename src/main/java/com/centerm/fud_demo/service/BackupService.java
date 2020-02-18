@@ -1,7 +1,5 @@
 package com.centerm.fud_demo.service;
 
-import com.centerm.fud_demo.entity.BackupRecord;
-
 import java.util.List;
 
 /**
@@ -10,17 +8,20 @@ import java.util.List;
  * @date 2020/2/4 上午10:31
  */
 public interface BackupService {
-    /**
-     * 获取所有备份文件
-     * @return
-     */
-    List<BackupRecord> getAllBackup();
 
     /**
-     * 删除备份
-     * @param fileId 文件id
+     * 备份文件
+     * @param copyFrom 原地址
+     * @param copyTo 目标地址
+     * @param fileName 文件名
+     */
+    void backupFile(String copyFrom, String copyTo, String fileName);
+
+    /**
+     * 获取文件的备份地址
+     * @param filePath 文件地址
      * @return
      */
-    Boolean deleteBackupRecord(Long fileId);
+    String getFileBackupPath(String filePath);
 
 }

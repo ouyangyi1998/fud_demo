@@ -11,12 +11,6 @@ import com.centerm.fud_demo.entity.FileRecord;
  */
 public interface FileService {
 
-    /**
-     * 添加文件
-     * @param fileRecord 需要上传的文件
-     * @return
-     */
-    Boolean addFile(FileRecord fileRecord);
 
     /**
      * 根据文件id删除文件（管理员操作）

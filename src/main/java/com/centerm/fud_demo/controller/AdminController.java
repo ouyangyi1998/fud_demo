@@ -1,6 +1,5 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.constant.Constants;
-import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
@@ -49,7 +48,6 @@ public class AdminController {
     @Autowired
     private BackupService backupService;
 
-
     @GetMapping("file")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
     public String adminDownload(HttpServletRequest request)
@@ -58,14 +56,6 @@ public class AdminController {
         request.setAttribute("fileList",fileList);
         return "admin/filelist";
     }
-    @GetMapping("backup")
-    @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
-    public String backupList(HttpServletRequest request){
-        List<BackupRecord> backupList = backupService.getAllBackup();
-        request.setAttribute("backupList", backupList);
-        return "admin/backup";
-    }
-
     @GetMapping("index")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
     public String adminIndex(ServletRequest request)
@@ -80,8 +70,6 @@ public class AdminController {
         request.setAttribute("fileList", fileRecordList);
         return "admin/index";
     }
-
-
     @GetMapping("ban")
     @RequiresRoles(value = {"ADMIN","SUPERVIP"},logical = Logical.OR)
     public String adminBan(HttpServletRequest request) {
@@ -99,7 +87,7 @@ public class AdminController {
     {
         AjaxReturnMsg msg = new AjaxReturnMsg();
         String username = request.getParameter("username");
-        User target=userService.findByUsername(username);
+        User target = userService.findByUsername(username);
         Integer userState = target.getState();
         Long userId=target.getId();
        if(Constants.NORMAL.equals(userState))
@@ -135,7 +123,7 @@ public class AdminController {
     @PostMapping("toDelete")
     @ResponseBody
     public AjaxReturnMsg toDelete(HttpServletRequest request) {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
+        AjaxReturnMsg msg = new AjaxReturnMsg();
         Long fileId = Long.parseLong(request.getParameter("fileId"));
         //ModelAndView mv = new ModelAndView();
         Boolean isSuccess=fileService.deleteFile(fileId);
@@ -264,20 +252,5 @@ public class AdminController {
         map.put("admin",(100 * adminNumber) / allUserNumber);
         return map;
     }
-    @PostMapping("deleteBackup")
-    @ResponseBody
-    public AjaxReturnMsg deleteBackup(HttpServletRequest request) {
-        AjaxReturnMsg msg=new AjaxReturnMsg();
-        Long fileId=Long.parseLong(request.getParameter("fileId"));
-        Boolean isSuccess = backupService.deleteBackupRecord(fileId);
-        if (!isSuccess)
-        {
-            msg.setFlag(Constants.FAIL);
-            msg.setMsg("Delete Failed...");
-            return msg;
-        }
-        msg.setFlag(Constants.SUCCESS);
-        return msg;
-        }
 
 }

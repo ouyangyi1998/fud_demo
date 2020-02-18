@@ -59,7 +59,7 @@ public class UploadController {
     /**
      * 上传分片
      * @param file 文件
-     * @param chunk　块
+     * @param chunk　片
      * @param guid　md5标识
      * @throws IOException
      */

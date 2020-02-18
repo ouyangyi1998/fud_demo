@@ -1,8 +1,8 @@
 package com.centerm.fud_demo.service.Impl;
 import com.centerm.fud_demo.dao.FileDao;
-import com.centerm.fud_demo.entity.BackupRecord;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.service.UploadService;
+import com.centerm.fud_demo.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,13 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.channels.WritableByteChannel;
-import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -166,9 +162,9 @@ public class UploadServiceImpl implements UploadService {
                     log.info("Combine finished...");
                     log.info("File name is " + fileName + ", MD5: " + guid);
                     FileRecord fileRecord = new FileRecord(finalName, uploadPath + "real" + File.separator + finalName + suffix,
-                            getFormatSize(realFile.length()), userId, guid, fileName.substring(fileName.lastIndexOf(".")));
-                    fileDao.addFile(fileRecord);
-                    backupFile(filePath + File.separator, backupPath, finalName + suffix, guid);
+                            FileUtil.getFormatSize(realFile.length()), userId, guid, fileName.substring(fileName.lastIndexOf(".")), backupPath + fileName + guid);
+                    fileDao.addFileRecord(fileRecord);
+                    //backupFile(filePath + File.separator, backupPath, finalName + suffix, guid);
                 }
             }else{
                 log.info("File already existed...");
@@ -185,46 +181,7 @@ public class UploadServiceImpl implements UploadService {
             log.error(e.getMessage());
         }
     }
-    public void backupFile(String copyFrom, String copyTo, String fileName, String guid){
-        log.info("Backup start...");
-        log.info("File name is: " + fileName);
-        String prefix = fileName.substring(0, fileName.lastIndexOf("."));
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
-        long start = System.currentTimeMillis();
-        File source = new File(copyFrom + fileName);
-        File target = new File(copyTo + fileName);
-        File targetFolder = new File(copyTo);
-        FileInputStream in = null;
-        FileOutputStream out = null;
-        if (!source.exists() || !source.isFile()){
-            log.error("Source doesn't exists or source isn't a file...");
-        }
-        if (!targetFolder.exists()){
-            targetFolder.mkdirs();
-        }
-        try{
-            target.createNewFile();
-            in = new FileInputStream(source);
-            out = new FileOutputStream(target);
-            FileChannel inChannel = in.getChannel();
-            WritableByteChannel outChannel = out.getChannel();
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-            inChannel.close();
-            outChannel.close();
-            in.close();
-            out.close();
-        }catch (FileNotFoundException e){
-            log.error("File not found...");
-        }catch (IOException e){
-            log.error(e.getMessage());
-        }
-        log.info("Backup finished...");
-        Long fileId = fileDao.getFileIdByFileName(fileName.substring(0, fileName.lastIndexOf(".")));
-        BackupRecord backupRecord = new BackupRecord(fileId, prefix, copyTo + fileName, userId, guid, suffix);
-        fileDao.addBackupRecord(backupRecord);
-        long end = System.currentTimeMillis();
-        log.info("Backup lasts：" + (end-start) + "ms");
-   }
+
 
     @Override
     public void checkMd5(HttpServletRequest request, HttpServletResponse response) {
@@ -250,31 +207,4 @@ public class UploadServiceImpl implements UploadService {
         }
     }
 
-
-
-    public String getFormatSize(double size){
-        double kiloByte = size / 1024;
-        if (kiloByte < 1){
-            return size + "Byte(s)";
-        }
-        double megaByte = kiloByte / 1024;
-        if (megaByte < 1){
-            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
-            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
-        }
-
-        double gigaByte = megaByte/1024;
-        if (gigaByte < 1){
-            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
-            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
-        }
-
-        double teraBytes = gigaByte / 1024;
-        if (teraBytes < 1){
-            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
-            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
-        }
-        BigDecimal result4 = new BigDecimal(teraBytes);
-        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
-    }
 }

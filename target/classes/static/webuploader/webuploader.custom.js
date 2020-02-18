@@ -3514,10 +3514,9 @@
                 });
                 start += len;
             }
-    
             file.blocks = pending.concat();
             file.remaning = pending.length;
-    
+            console.log(api.toLocaleString());
             return api;
         }
     

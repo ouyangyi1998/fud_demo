@@ -4,12 +4,16 @@
 <mapper namespace="com.centerm.fud_demo.dao.FileDao">
     <parameterMap id="FileRecord" type="com.centerm.fud_demo.entity.FileRecord"/>
     <parameterMap id="DownloadRecord" type="com.centerm.fud_demo.entity.DownloadRecord"/>
-    <parameterMap id="BackupRecord" type="com.centerm.fud_demo.entity.BackupRecord"/>
 
     <update id="updateFile" parameterType="long">
         UPDATE fud.file
         SET download_times=download_times+1
         WHERE file.id=#{fileId}
+    </update>
+    <update id="updateFileRecord">
+        UPDATE fud.file
+        SET fud.file.md5=#{fileMd5}, fud.file.size=#{fileSize}
+        WHERE fud.file.id=#{fileId}
     </update>
     <select id="getFileByUserId" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id, file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime
@@ -17,9 +21,9 @@
         WHERE fud.file.user_id=#{userId}
         ORDER BY fud.file.create_time DESC
     </select>
-    <insert id="addFile" parameterMap="FileRecord">
-        INSERT INTO file(name, local_url, size, user_id, md5, suffix)
-        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix})
+    <insert id="addFileRecord" parameterMap="FileRecord">
+        INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url)
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl})
     </insert>
     <delete id="deleteFileById" parameterType="long">
         DELETE FROM fud.file
@@ -33,17 +37,13 @@
         DELETE FROM fud.download
         WHERE download.file_id=#{fileId}
     </delete>
-    <delete id="deleteBackupRecord" parameterType="long">
-        DELETE FROM fud.backup
-        WHERE backup.file_id=#{fileId}
+    <delete id="deleteFileByPath" parameterType="string">
+        DELETE FROM fud.file
+        WHERE file.local_url=#{filePath}
     </delete>
     <insert id="addDownloadRecord" parameterMap="DownloadRecord">
         INSERT INTO download(user_id, file_id)
         VALUES (#{userId}, #{fileId})
-    </insert>
-    <insert id="addBackupRecord" parameterMap="BackupRecord">
-        INSERT INTO backup(file_id, name, local_url, user_id, md5, suffix)
-        VALUES(#{fileId}, #{name}, #{localUrl}, #{userId}, #{md5}, #{suffix})
     </insert>
     <select id="getFileById" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id, file.name,file.local_url localUrl, file.create_time createTime
@@ -91,19 +91,11 @@
         ORDER BY d.create_time DESC
         LIMIT 0, 5
     </select>
-    <select id="getAllBackup" resultType="com.centerm.fud_demo.entity.BackupRecord">
-        SELECT backup.file_id fileId, backup.name, backup.local_url AS localUrl,DATE_FORMAT(backup.create_time,'%Y-%m-%d')  AS createTime, suffix
-        FROM fud.backup
-    </select>
-    <select id="getBackupById" resultType="com.centerm.fud_demo.entity.BackupRecord">
-        SELECT backup.name, backup.local_url localUrl
-        FROM fud.backup
-        WHERE backup.file_id=#{fileId}
-    </select>
-    <select id="getFileIdByFileName" resultType="long">
+
+    <select id="getFileIdByUrl" resultType="long">
         SELECT file.id
         FROM fud.file
-        WHERE file.name=#{fileName}
+        WHERE file.local_url=#{localUrl}
     </select>
     <select id="getFileLikeContents" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id, file.name, file.size, file.suffix, DATE_FORMAT(file.create_time, '%Y-%m-%d') createTime
@@ -139,9 +131,19 @@
         FROM fud.file
         WHERE fud.file.user_id=#{userId}
     </select>
-    <select id="getBackupIdByMd5" parameterType="string" resultType="com.centerm.fud_demo.entity.BackupRecord">
-        SELECT backup.file_id
-        FROM fud.backup
-        WHERE backup.md5=#{md5}
+    <select id="getFileByName" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.id, file.size, file.md5
+        FROM fud.file
+        WHERE file.name=#{fileName}
+    </select>
+    <select id="getFileIdByFileName" resultType="java.lang.Long">
+        SELECT file.id
+        FROM fud.file
+        WHERE file.name=#{fileName}
+    </select>
+    <select id="getFileBackupUrl" resultType="java.lang.String">
+        SELECT file.backup_url
+        FROM fud.file
+        WHERE file.local_url=#{filePath}
     </select>
 </mapper>

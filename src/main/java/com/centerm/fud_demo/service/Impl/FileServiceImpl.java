@@ -3,13 +3,13 @@ package com.centerm.fud_demo.service.Impl;
 import com.centerm.fud_demo.dao.FileDao;
 import com.centerm.fud_demo.entity.FileRecord;
 import com.centerm.fud_demo.service.FileService;
+import com.centerm.fud_demo.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * 文件相关操作实现类
@@ -18,33 +18,25 @@ import java.util.Map;
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
-
     @Autowired
     private FileDao fileDao;
-
 
     @Override
     public List<FileRecord> getFileByUserId(Long userId) {
         return fileDao.getFileByUserId(userId);
     }
 
-
-    @Override
-    public Boolean addFile(FileRecord fileRecord) {
-        return fileDao.addFile(fileRecord);
-    }
-
     @Override
     public Boolean deleteFileById(Long userId, Long fileId) {
         FileRecord deleteFile = fileDao.getFileById(fileId);
-        deleteLocalFile(deleteFile.getLocalUrl());
+        FileUtil.deleteLocalFile(deleteFile.getLocalUrl());
         return fileDao.deleteFileById(userId, fileId);
     }
 
     @Override
     public Boolean deleteFile(Long fileId) {
         FileRecord deleteFile = fileDao.getFileById(fileId);
-        deleteLocalFile(deleteFile.getLocalUrl());
+        FileUtil.deleteLocalFile(deleteFile.getLocalUrl());
         return fileDao.deleteFile(fileId);
     }
 
@@ -58,18 +50,6 @@ public class FileServiceImpl implements FileService {
         return fileDao.updateFile(fileId);
     }
 
-
-    private void deleteLocalFile(String localUrl) {
-        try{
-            log.info("Start deleting local file: " + localUrl);
-            File deleteFile = new File(localUrl);
-            deleteFile.delete();
-            log.info("Delete successfully...");
-        }catch (Exception e){
-            log.error("Delete Error...");
-            log.error(e.getMessage());
-        }
-    }
 
     @Override
     public List<FileRecord> getFileLikeContents(String contents,Long userId) {
