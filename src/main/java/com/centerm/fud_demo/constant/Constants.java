@@ -15,5 +15,7 @@ public class Constants {
     public static final long ADMIN = 2;
     public static final String ACCEPT = "1";
     public static final Long SUPERVIPID = 1L;
+    public static final String UPLOAD = "upload";
+    public static final String CHECK = "check";
 
 }

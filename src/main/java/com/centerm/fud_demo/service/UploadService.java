@@ -35,9 +35,9 @@ public interface UploadService {
      * @param userId
      * @return
      */
-   Long getUploadTimesByCurrUser(Long userId);
+    Long getUploadTimesByCurrUser(Long userId);
 
-    Map<String, Object> findByFileMd5(String md5);
+    Map<String, Object> findByFileMd5(String md5, Long userId);
 
     /**
      * 上传文件
@@ -45,7 +45,7 @@ public interface UploadService {
      * @param multipartFile 文件
      * @throws Exception
      */
-    Map<String, Object> realUpload(FileForm form, MultipartFile multipartFile) throws Exception;
+    Map<String, Object> realUpload(FileForm form, MultipartFile multipartFile, Long userId) throws Exception;
 
     /**
      * 确定文件是否存在

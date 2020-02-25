@@ -16,6 +16,7 @@ import java.util.Date;
 public class FileRecord {
 
     private Long id;
+    private String fileUuid;
     private String name;
     private String localUrl;
     private String size;
@@ -25,6 +26,7 @@ public class FileRecord {
     private Timestamp createTime;
     private String suffix;
     private String backupUrl;
+    private Integer status;
 
     public FileRecord(){}
 

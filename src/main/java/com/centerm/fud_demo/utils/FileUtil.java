@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 
 /**
@@ -17,6 +18,12 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 public class FileUtil {
+
+    public static synchronized String genUniqueKey(){
+        Random random = new Random();
+        Integer num = random.nextInt(900000) + 100000;
+        return System.currentTimeMillis() + String.valueOf(num);
+    }
     public static String getFormatSize(double size){
         double kiloByte = size / 1024;
         if (kiloByte < 1){
@@ -43,6 +50,28 @@ public class FileUtil {
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
 
+    public static String getFileMd5(File file){
+        if (!file.exists() || !file.isFile()){
+            return null;
+        }
+        MessageDigest digest = null;
+        FileInputStream in = null;
+        byte buffer[] = new byte[1024];
+        int len;
+        try{
+            digest = MessageDigest.getInstance("MD5");
+            in = new FileInputStream(file);
+            while ((len = in.read(buffer, 0, 1024)) != -1){
+                digest.update(buffer, 0, len);
+            }
+            in.close();
+        }catch (Exception e){
+            log.info("getMd5 error: " + e.getMessage());
+            return null;
+        }
+        BigInteger bigInteger = new BigInteger(1, digest.digest());
+        return bigInteger.toString(16);
+    }
     public static String getFileMd5(String path){
         BigInteger bi = null;
         try{

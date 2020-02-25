@@ -15,17 +15,42 @@ import java.util.Map;
 public interface FileDao {
 
    /**
+    * 根据md5查询文件
+    * @param fileMd5 文件md5值
+    * @param userId 用户id
+    * @return
+    */
+    FileRecord findFileByFileMd5(String fileMd5, Long userId) ;
+
+
+    /**
     * 根据用户id获取上传文件
     * @param userId
     * @return
     */
    List<FileRecord> getFileByUserId(Long userId);
+
+   /**
+    * 上传第一个分片时的文件存储
+    * @param fileRecord
+    * @return
+    */
+   Boolean saveFileBegin(FileRecord fileRecord);
    /**
     * 添加文件
     * @param fileRecord 文件实体
     * @return 文件
     */
-   Boolean addFileRecord(FileRecord fileRecord);
+   Boolean saveFileSmall(FileRecord fileRecord);
+
+   /**
+    * 上传文成后的文件更新
+    * @param fileRecord
+    * @return
+    */
+   Boolean saveFileEnd(FileRecord fileRecord);
+
+
    /**
     * 根据id获取文件
     * @param id  文件id
@@ -180,4 +205,6 @@ public interface FileDao {
    Long getFileIdByFileName(String fileName);
 
    String getFileBackupUrl(String filePath);
+
+   Boolean addFileRecord(FileRecord fileRecord);
 }

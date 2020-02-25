@@ -1,4 +1,6 @@
 package com.centerm.fud_demo.service.Impl;
+
+import com.centerm.fud_demo.constant.Constants;
 import com.centerm.fud_demo.dao.FileDao;
 import com.centerm.fud_demo.entity.FileForm;
 import com.centerm.fud_demo.entity.FileRecord;
@@ -9,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.Arrays;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +29,8 @@ import java.util.Map;
 @Service
 @Slf4j
 public class UploadServiceImpl implements UploadService {
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     @Value("${filePath}")
     private String uploadPath;
@@ -52,25 +57,181 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public Map<String, Object> findByFileMd5(String md5) {
-        //todo
-        return null;
+    public Map<String, Object> findByFileMd5(String md5, Long currUserId) {
+        userId = currUserId;
+        FileRecord uploadFile = fileDao.findFileByFileMd5(md5, userId);
+        Map<String, Object> map = null;
+        if (null == uploadFile){
+            log.info("File is not uploaded...");
+            map = new HashMap<>();
+            map.put("flag", 0);
+            map.put("fileUuid", FileUtil.genUniqueKey());
+            map.put("date", sdf.format(new Date()));
+        }else{
+            //上传过该文件，判断文件还是否存在
+            File file = new File(uploadPath + "real" + File.separator + userId + "/" + uploadFile.getFileUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
+            if (file.exists()){
+                log.info("findByFileMd5: file already exists..." );
+                if (uploadFile.getStatus() == 1){
+                    log.info("File is not complete...");
+                    map = new HashMap<>();
+                    map.put("flag", 1);
+                    map.put("fileUuid", uploadFile.getFileUuid());
+                    map.put("date", sdf.format(new Date()));
+                }else if(uploadFile.getStatus() == 2){
+                    log.info("File is complete...");
+                    map = new HashMap<>();
+                    map.put("flag", 2);
+                }
+            }else {
+                fileDao.deleteFile(uploadFile.getId());
+                map = new HashMap<>();
+                map.put("flag", 0);
+                map.put("fileUud", uploadFile.getFileUuid());
+                map.put("date", sdf.format(new Date()));
+            }
+        }
+        return map;
     }
 
     @Override
-    public Map<String, Object> realUpload(FileForm form, MultipartFile multipartFile) throws Exception {
-        //TODO
-        return null;
+    public Map<String, Object> realUpload(FileForm form, MultipartFile multipartFile, Long currUserId) throws Exception {
+        userId = currUserId;
+        String action = form.getAction();
+        String fileUuid = form.getUuid();
+        log.info("uuid: " + fileUuid);
+        int index = Integer.valueOf(form.getIndex());
+        String md5 = form.getMd5();
+        int total = Integer.valueOf(form.getTotal());
+        String fileName = form.getName();
+        String size = form.getSize();
+        String suffix = fileName.substring(fileName.lastIndexOf('.'));
+        String tempDirectory = uploadPath + "temp" + File.separator + fileUuid;
+        String saveDirectory = uploadPath + "real" + File.separator + userId + File.separator + fileUuid;
+        String filePath = saveDirectory + File.separator + fileUuid + "." + suffix;
+        //验证路径是否存在，不存在则创建目录
+        File tempPath = new File(tempDirectory);
+        if (!tempPath.exists()){
+            tempPath.mkdirs();
+        }
+        File path = new File(saveDirectory);
+        if (path.exists()){
+            path.mkdirs();
+        }
+        //文件分片位置
+        File file = new File(tempDirectory, fileUuid + "_" + index);
+
+        //根据action执行操作
+        Map<String, Object> map = null;
+        if (Constants.UPLOAD.equals(action)){
+            //分片上传中出错，有残余，时需要删除分片后重新上传
+            if (file.exists()){
+                file.delete();
+            }
+            multipartFile.transferTo(new File(tempDirectory, fileUuid + "_" + index));
+            map = new HashMap<>();
+            map.put("flag", "1");
+            map.put("fileUuid", fileUuid);
+        }
+        if (path.isDirectory()){
+            File[] fileArray = path.listFiles();
+            if (fileArray != null){
+                if (fileArray.length == total){
+                    //分块全部上传完毕，合并
+                    File newFile = new File(saveDirectory, fileName);
+                    //文件追加写入
+                    FileOutputStream outputStream = new FileOutputStream(newFile, true);
+                    byte[] byt = new byte[10 * 1024 * 1024];
+                    int len;
+                    //分片文件
+                    FileInputStream temp = null;
+                    for (int i = 0; i < total; i++) {
+                        int j = i + 1;
+                        temp = new FileInputStream(new File(tempDirectory, fileUuid + "_" + j));
+                        while ((len = temp.read(byt)) != -1){
+                            outputStream.write(byt, 0, len);
+                        }
+                    }
+                    temp.close();
+                    outputStream.close();
+                    FileRecord uploadFile = new FileRecord();
+                    if (1 == index){
+                        uploadFile.setFileUuid(fileUuid);
+                        uploadFile.setStatus(2);
+                        uploadFile.setName(fileName);
+                        uploadFile.setMd5(md5);
+                        uploadFile.setSuffix(suffix);
+                        uploadFile.setLocalUrl(filePath);
+                        uploadFile.setSize(FileUtil.getFormatSize(Double.valueOf(size)));
+                        uploadFile.setUserId(userId);
+                        uploadFile.setBackupUrl(backupPath + md5);
+                        fileDao.saveFileSmall(uploadFile);
+                    }else
+                    {
+                        uploadFile.setFileUuid(fileUuid);
+                        uploadFile.setStatus(2);
+                        fileDao.saveFileEnd(uploadFile);
+                    }
+                    map = new HashMap<>();
+                    map.put("fileUuid", fileUuid);
+                    map.put("flag", 2);
+                    return map;
+                }else if (1 == index){
+                    //第一个分片上传时记录到数据库
+                    FileRecord uploadFile = new FileRecord();
+                    uploadFile.setMd5(md5);
+                    String name = fileName.substring(0, fileName.lastIndexOf("."));
+                    uploadFile.setFileUuid(fileUuid);
+                    uploadFile.setStatus(1);
+                    uploadFile.setName(fileName);
+                    uploadFile.setSuffix(suffix);
+                    uploadFile.setLocalUrl(filePath);
+                    uploadFile.setSize(FileUtil.getFormatSize(Double.valueOf(size)));
+                    uploadFile.setUserId(userId);
+                    uploadFile.setBackupUrl(backupPath + md5);
+                    fileDao.saveFileBegin(uploadFile);
+                }
+            }
+        }
+        return map;
     }
 
     @Override
     public Map<String, Object> check(FileForm form) throws Exception {
-        String fileId = form.getUuid();
+        String fileUuid = form.getUuid();
         int index = Integer.valueOf(form.getIndex());
         String partMd5 = form.getPartMd5();
         int total = Integer.valueOf(form.getTotal());
-        //TODO
-        return null;
+        String saveDirectory = uploadPath + "temp" + File.separator + fileUuid;
+        //验证路径是否存在，不存在则创建目录
+        File path = new File(saveDirectory);
+        if (!path.exists()){
+            path.mkdirs();
+        }
+        //文件分片位置
+        File file = new File(saveDirectory, fileUuid + "_" + index);
+        //根据action来执行不同的操作
+        Map<String, Object> map = null;
+        String md5Str = FileUtil.getFileMd5(file);
+        if (md5Str != null && md5Str.length() == 31){
+            log.info("check length = " + partMd5.length() + " md5Str length " + md5Str.length() + "    " + partMd5 + "  " + md5Str);
+            md5Str = "0" + md5Str;
+        }
+        if (md5Str != null && md5Str.equals(partMd5)){
+            //已上传该分片
+            map = new HashMap<>();
+            map.put("flag", "1");
+            map.put("fileUuid", fileUuid);
+            if (index != total){
+                return map;}
+            }else{
+            //分片未上传
+            map = new HashMap<>();
+            map.put("flag", "0");
+            map.put("fileUuid", fileUuid);
+            return map;
+        }
+        return map;
     }
 
 }

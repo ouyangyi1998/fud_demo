@@ -1,19 +1,22 @@
 package com.centerm.fud_demo.controller;
 import com.centerm.fud_demo.constant.Constants;
+import com.centerm.fud_demo.entity.FileForm;
 import com.centerm.fud_demo.entity.User;
 import com.centerm.fud_demo.entity.ajax.AjaxReturnMsg;
 import com.centerm.fud_demo.service.DownloadService;
 import com.centerm.fud_demo.service.FileService;
 import com.centerm.fud_demo.service.UploadService;
+import com.centerm.fud_demo.utils.AesUtil;
 import com.centerm.fud_demo.utils.GetDateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.*;
 import java.util.*;
 
@@ -23,7 +26,7 @@ import java.util.*;
  */
 @Controller
 @Slf4j
-@RequestMapping("upload")
+@RequestMapping("file")
 public class UploadController {
 
     private User currUser = null;
@@ -34,7 +37,6 @@ public class UploadController {
     private FileService fileService;
     @Autowired
     private DownloadService downloadService;
-
     /**
      * 跳转到上传界面
      * @return
@@ -44,40 +46,36 @@ public class UploadController {
         return "user/upload";
     }
 
-    /**
-     * 查看当前分片是否上传
-     *
-     * @param request
-     * @param response
-     */
-    @PostMapping("checkblock")
+    @PostMapping("isUpload")
     @ResponseBody
-    public void checkMd5(HttpServletRequest request, HttpServletResponse response) {
-        uploadService.checkMd5(request, response);
+    public Map<String, Object> isUpload(@Valid FileForm form, HttpServletRequest request){
+        currUser = (User)request.getSession().getAttribute("user");
+        return uploadService.findByFileMd5(form.getMd5(), currUser.getId());
     }
 
-    /**
-     * 上传分片
-     * @param file 文件
-     * @param chunk　片
-     * @param guid　md5标识
-     * @throws IOException
-     */
-    @PostMapping("save")
+    @PostMapping("/upload")
     @ResponseBody
-    public void upload(@RequestParam MultipartFile file, Integer chunk, String guid, HttpServletRequest request) throws Exception {
-        currUser = (User) request.getSession().getAttribute("user");
-        uploadService.upload(file, chunk, guid, currUser.getId());
-    }
-    /**
-     * 合并文件
-     * @param guid　md5
-     * @param fileName 文件名
-     */
-    @PostMapping("combine")
-    @ResponseBody
-    public void combineBlock(String guid, String fileName) {
-        uploadService.combineBlock(guid, fileName);
+    public Map<String, Object> upload(@Valid FileForm form, HttpServletRequest request,
+                                      @RequestParam(value = "fileEncrypt", required = false)String fileEncrypt,
+                                      @RequestParam(value = "key", required = false)String key
+                                      )throws Exception{
+        currUser = (User)request.getSession().getAttribute("user");
+        Map<String, Object> map = null;
+        try{
+            if (Constants.CHECK.equals(form.getAction())){
+                map = uploadService.check(form);
+            }
+            if (Constants.UPLOAD.equals(form.getAction())){
+                log.info("key = " + key);
+                String decrypt = AesUtil.decrypt(fileEncrypt, key);
+                InputStream inputStream = new ByteArrayInputStream(AesUtil.hexToByte(decrypt));
+                MultipartFile file = new MockMultipartFile(form.getName(), inputStream);
+                map = uploadService.realUpload(form, file, currUser.getId());
+            }
+        }catch (Exception e){
+            log.error("Upload error: " + e.getMessage());
+        }
+        return map;
     }
 
     /**

@@ -21,10 +21,19 @@
         WHERE fud.file.user_id=#{userId}
         ORDER BY fud.file.create_time DESC
     </select>
-    <insert id="addFileRecord" parameterMap="FileRecord">
-        INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url)
-        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl})
+    <insert id="saveFileBegin" parameterMap="FileRecord">
+        INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status)
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl}, #{fileUuid}, #{status})
     </insert>
+    <insert id="saveFileSmall" parameterMap="FileRecord">
+        INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status)
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl}, #{uuid}, #{status})
+    </insert>
+    <update id="saveFileEnd" parameterMap="FileRecord">
+        UPDATE fud.file
+        SET file.status=#{status}
+        WHERE file.uuid=#{fileUuid}
+    </update>
     <delete id="deleteFileById" parameterType="long">
         DELETE FROM fud.file
         WHERE file.id=#{param2} AND file.user_id=#{param1}
@@ -42,8 +51,12 @@
         WHERE file.local_url=#{filePath}
     </delete>
     <insert id="addDownloadRecord" parameterMap="DownloadRecord">
-        INSERT INTO download(user_id, file_id)
+        INSERT INTO fud.download(user_id, file_id)
         VALUES (#{userId}, #{fileId})
+    </insert>
+    <insert id="addFileRecord" parameterMap="FileRecord">
+        INSERT INTO fud.file(name, local_url, size, user_id, md5, suffix, backup_url)
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl})
     </insert>
     <select id="getFileById" parameterType="long" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id, file.name,file.local_url localUrl, file.create_time createTime
@@ -145,5 +158,10 @@
         SELECT file.backup_url
         FROM fud.file
         WHERE file.local_url=#{filePath}
+    </select>
+    <select id="findFileByFileMd5" resultType="com.centerm.fud_demo.entity.FileRecord">
+        SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status
+        FROM fud.file
+        WHERE file.md5=#{fileMd5} AND file.user_id=#{userId}
     </select>
 </mapper>

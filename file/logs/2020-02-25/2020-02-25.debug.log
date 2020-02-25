@@ -1,0 +1,614 @@
+[2020-02-25 16:22:57.796] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:22:57.817] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:22:57.845] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:22:57.855] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:22:57.855] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:22:57.856] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:22:58.738] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:22:58.739] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:22:58.745] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 5
+[2020-02-25 16:22:58.746] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:22:58.746] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:22:58.748] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:22:58.749] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:22:58.750] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:22:58.751] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:22:58.752] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:22:58.752] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:22:58.754] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 4
+[2020-02-25 16:22:58.755] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:22:58.756] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:22:58.757] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 5
+[2020-02-25 16:22:58.794] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:22:58.794] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:22:58.797] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:22:59.362] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:22:59.363] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:22:59.367] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 2
+[2020-02-25 16:22:59.368] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:22:59.369] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:22:59.370] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:23:05.834] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - ==>  Preparing: SELECT file.id, file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC 
+[2020-02-25 16:23:05.835] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:23:05.840] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - <==      Total: 6
+[2020-02-25 16:23:54.882] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - ==>  Preparing: SELECT file.id, file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC 
+[2020-02-25 16:23:54.883] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:23:54.884] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileByUserId - <==      Total: 0
+[2020-02-25 16:26:13.228] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:26:13.247] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:26:13.262] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:26:13.268] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:26:13.268] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:26:13.269] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:26:13.846] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:26:13.846] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:26:13.848] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 16:26:13.849] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:26:13.850] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:26:13.851] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:26:13.852] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:26:13.853] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:26:13.854] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:26:13.855] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:26:13.855] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:26:13.856] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 16:26:13.857] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:26:13.858] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:26:13.859] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 16:26:13.893] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:26:13.894] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:26:13.895] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:26:14.353] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:26:14.354] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:26:14.355] [https-jsse-nio-8888-exec-5] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 16:26:14.357] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:26:14.358] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:26:14.359] [https-jsse-nio-8888-exec-5] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:28:23.042] [Thread-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileBackupUrl - ==>  Preparing: SELECT file.backup_url FROM fud.file WHERE file.local_url=? 
+[2020-02-25 16:28:23.043] [Thread-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileBackupUrl - ==> Parameters: file/real/08 可以听到心跳.169be5d35cc573ba1ae68507da1a91ab7.mp4(String)
+[2020-02-25 16:28:23.044] [Thread-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getFileBackupUrl - <==      Total: 0
+[2020-02-25 16:33:07.835] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:33:07.854] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:33:07.870] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:33:07.876] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:33:07.877] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:33:07.878] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:33:08.565] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:33:08.565] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:33:08.567] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 16:33:08.568] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:33:08.569] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:33:08.571] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:33:08.572] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:33:08.573] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:33:08.574] [https-jsse-nio-8888-exec-7] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:33:08.575] [https-jsse-nio-8888-exec-7] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:33:08.575] [https-jsse-nio-8888-exec-7] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:33:08.576] [https-jsse-nio-8888-exec-7] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 16:33:08.577] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:33:08.578] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:33:08.579] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 16:33:08.614] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:33:08.615] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:33:08.616] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:33:09.188] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:33:09.189] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:33:09.190] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 16:33:09.191] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:33:09.192] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:33:09.193] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:35:57.722] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:35:57.742] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:35:57.758] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:35:57.763] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:35:57.763] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:35:57.764] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:35:58.344] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:35:58.345] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:35:58.347] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 16:35:58.348] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:35:58.349] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:35:58.351] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:35:58.352] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:35:58.353] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:35:58.354] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:35:58.355] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:35:58.355] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:35:58.356] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 16:35:58.357] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:35:58.358] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:35:58.359] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 16:35:58.394] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:35:58.395] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:35:58.396] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:35:59.061] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:35:59.062] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:35:59.063] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 16:35:59.064] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:35:59.064] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:35:59.065] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:56:51.081] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:56:51.100] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:56:51.115] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:56:51.120] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:56:51.121] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:56:51.122] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:56:54.391] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:56:54.391] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.393] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 16:56:54.394] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:56:54.394] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.395] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:56:54.396] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:56:54.397] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.398] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:56:54.399] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:56:54.399] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.400] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 16:56:54.401] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:56:54.402] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.403] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 16:56:54.440] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:56:54.440] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:56:54.442] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:56:54.987] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:56:54.988] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.989] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 16:56:54.991] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:56:54.991] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:56:54.993] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:59:02.577] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:59:02.597] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:59:02.613] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:59:02.618] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 16:59:02.618] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 16:59:02.619] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 16:59:03.313] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 16:59:03.314] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.315] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 16:59:03.316] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 16:59:03.316] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.317] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 16:59:03.318] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 16:59:03.319] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.320] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 16:59:03.320] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:59:03.321] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.322] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 16:59:03.323] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 16:59:03.323] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.324] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 16:59:03.356] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 16:59:03.357] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 16:59:03.359] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 16:59:03.949] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:59:03.949] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.950] [https-jsse-nio-8888-exec-6] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 16:59:03.952] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 16:59:03.952] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 16:59:03.953] [https-jsse-nio-8888-exec-6] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 16:59:09.625] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5={fileMd5} AND file.user_id=? 
+[2020-02-25 16:59:09.626] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 1(Long)
+[2020-02-25 17:02:02.808] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:02:02.827] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:02:02.842] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:02:02.847] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:02:02.848] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:02:02.849] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:02:03.744] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:02:03.745] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:02:03.746] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:02:03.748] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:02:03.748] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:02:03.750] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:02:03.751] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:02:03.752] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:02:03.753] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:02:03.754] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:02:03.754] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:02:03.755] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:02:03.756] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:02:03.757] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:02:03.758] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:02:03.794] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:02:03.794] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:02:03.796] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:02:04.459] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:02:04.459] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:02:04.460] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 17:02:04.461] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:02:04.461] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:02:04.462] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 17:02:09.738] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 17:02:09.738] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 17:02:09.740] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 17:07:47.717] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:07:47.737] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:07:47.752] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:07:47.757] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:07:47.758] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:07:47.759] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:07:49.151] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:07:49.152] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.154] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:07:49.155] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:07:49.155] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.157] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:07:49.158] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:07:49.159] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.160] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:07:49.161] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:07:49.162] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.163] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:07:49.165] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:07:49.165] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.166] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:07:49.207] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:07:49.207] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:07:49.209] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:07:49.772] [https-jsse-nio-8888-exec-3] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:07:49.773] [https-jsse-nio-8888-exec-3] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.774] [https-jsse-nio-8888-exec-3] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 17:07:49.776] [https-jsse-nio-8888-exec-3] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:07:49.777] [https-jsse-nio-8888-exec-3] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:07:49.778] [https-jsse-nio-8888-exec-3] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 17:09:49.827] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:09:49.846] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:09:49.862] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:09:49.870] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:09:49.870] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:09:49.871] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:09:51.116] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:09:51.116] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.118] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:09:51.119] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:09:51.119] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.120] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:09:51.121] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:09:51.122] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.122] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:09:51.123] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:09:51.124] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.125] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:09:51.125] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:09:51.126] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.127] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:09:51.164] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:09:51.164] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:09:51.166] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:09:51.730] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:09:51.731] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.732] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 17:09:51.734] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:09:51.735] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:09:51.736] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 17:13:16.256] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:13:16.274] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:13:16.289] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:13:16.295] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:13:16.295] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:13:16.296] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:13:17.260] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:13:17.260] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.262] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:13:17.263] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:13:17.264] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.265] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:13:17.266] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:13:17.266] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.267] [https-jsse-nio-8888-exec-4] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:13:17.268] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:13:17.269] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.270] [https-jsse-nio-8888-exec-4] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:13:17.271] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:13:17.271] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.272] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:13:17.307] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:13:17.308] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:13:17.309] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:13:17.976] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.file.create_time,'%Y-%m-%d') AS days,COUNT(*) AS upload FROM fud.file WHERE fud.file.user_id = ? AND fud.file.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:13:17.977] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.978] [https-jsse-nio-8888-exec-9] [DEBUG] c.centerm.fud_demo.dao.FileDao.getUploadToMorrisJs - <==      Total: 0
+[2020-02-25 17:13:17.980] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==>  Preparing: SELECT DATE_FORMAT(fud.download.create_time,'%Y-%m-%d') AS days,COUNT(*) AS download FROM fud.download WHERE fud.download.user_id = ? AND fud.download.create_time BETWEEN SUBDATE( DATE( NOW( ) ), INTERVAL 7 DAY ) AND DATE( NOW( ) ) GROUP BY days ORDER BY days DESC 
+[2020-02-25 17:13:17.981] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - ==> Parameters: 1(Long)
+[2020-02-25 17:13:17.982] [https-jsse-nio-8888-exec-9] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadToMorrisJs - <==      Total: 0
+[2020-02-25 17:13:23.364] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 17:13:23.365] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 17:13:23.366] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 17:53:37.213] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:53:37.232] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:53:37.248] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:53:37.253] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:53:37.253] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:53:37.254] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:53:38.278] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:53:38.279] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:53:38.281] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:53:38.282] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:53:38.283] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:53:38.284] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:53:38.286] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:53:38.286] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:53:38.287] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:53:38.288] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:53:38.289] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:53:38.290] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:53:38.291] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:53:38.291] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:53:38.292] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:53:38.328] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:53:38.329] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:53:38.330] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:53:50.516] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 17:53:50.517] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 17:53:50.518] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 17:53:51.793] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:52.767] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:53.711] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:54.712] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:55.861] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:56.862] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:57.823] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:58.803] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:53:59.829] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:00.760] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:01.782] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:02.688] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:03.617] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:04.666] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:05.572] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:06.591] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:07.611] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:08.650] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:09.538] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:10.478] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:11.500] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:12.395] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:13.368] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:14.231] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:15.123] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:16.119] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:17.040] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:18.058] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:18.976] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:20.002] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:20.925] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:21.846] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:22.893] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:23.782] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:24.823] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:25.742] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:26.772] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:27.783] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:28.707] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:29.629] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:30.550] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:31.490] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:32.390] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:33.326] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:34.352] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:35.259] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:36.292] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:37.321] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:38.329] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:39.240] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:40.173] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:41.200] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:42.116] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:43.039] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:43.959] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:44.887] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:45.807] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:46.728] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:47.763] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:48.665] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:49.695] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:50.625] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:51.523] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:52.464] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:53.388] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:54.409] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:55.330] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:56.255] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:57.278] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:58.206] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:54:59.534] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:00.381] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:01.368] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:02.309] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:03.294] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:04.247] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:05.163] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:06.195] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:07.097] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:08.196] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:09.147] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:10.136] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:11.107] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:12.035] [https-jsse-nio-8888-exec-4] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:13.044] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:13.975] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:14.997] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:15.990] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:17.073] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:18.069] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:18.989] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:20.009] [https-jsse-nio-8888-exec-7] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:21.060] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:22.119] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:23.098] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:24.124] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:55:51.529] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:55:51.548] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:55:51.564] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:55:51.569] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 17:55:51.569] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 17:55:51.570] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 17:55:52.283] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 17:55:52.284] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 17:55:52.285] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 17:55:52.287] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 17:55:52.287] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 17:55:52.289] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 17:55:52.290] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 17:55:52.290] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 17:55:52.291] [https-jsse-nio-8888-exec-1] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 17:55:52.292] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:55:52.293] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 17:55:52.293] [https-jsse-nio-8888-exec-1] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 17:55:52.294] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 17:55:52.295] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 17:55:52.296] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 17:55:52.331] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 17:55:52.331] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 17:55:52.333] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 17:56:03.022] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 17:56:03.023] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 17:56:03.024] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 17:56:04.307] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 17:56:04.309] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==> Parameters: 4k-wallpaper-background-beautiful-853199.jpg(String), file/real/1/undefined/undefined..jpg(String), 7.57MB(String), 1(Long), 3b481f0b45553e138f4006f2edebd0b2(String), .jpg(String), file/backup/3b481f0b45553e138f4006f2edebd0b2(String), undefined(String), 1(Integer)
+[2020-02-25 17:56:04.310] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - <==    Updates: 1
+[2020-02-25 18:03:10.252] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 18:03:10.272] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 18:03:10.287] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 18:03:10.292] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 18:03:10.292] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 18:03:10.294] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 18:03:10.867] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 18:03:10.868] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 18:03:10.872] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 1
+[2020-02-25 18:03:10.873] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 18:03:10.874] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 18:03:10.876] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 18:03:10.877] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 18:03:10.877] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 18:03:10.878] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 18:03:10.879] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 18:03:10.879] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 18:03:10.880] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 18:03:10.881] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 18:03:10.882] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 18:03:10.884] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 1
+[2020-02-25 18:03:10.922] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 18:03:10.922] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 18:03:10.923] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 18:03:20.144] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 18:03:20.145] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 18:03:20.146] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 1
+[2020-02-25 18:03:20.147] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - ==>  Preparing: DELETE FROM fud.file WHERE file.id=? 
+[2020-02-25 18:03:20.148] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - ==> Parameters: 1(Long)
+[2020-02-25 18:03:20.149] [https-jsse-nio-8888-exec-3] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - <==    Updates: 1
+[2020-02-25 18:03:21.449] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==>  Preparing: INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+[2020-02-25 18:03:21.450] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - ==> Parameters: 4k-wallpaper-background-beautiful-853199.jpg(String), file/real/1/undefined/undefined..jpg(String), 7.57MB(String), 1(Long), 3b481f0b45553e138f4006f2edebd0b2(String), .jpg(String), file/backup/3b481f0b45553e138f4006f2edebd0b2(String), undefined(String), 1(Integer)
+[2020-02-25 18:03:21.451] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.saveFileBegin - <==    Updates: 1
+[2020-02-25 18:06:39.439] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 18:06:39.457] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 18:06:39.473] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 18:06:39.478] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 18:06:39.478] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 18:06:39.479] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 18:06:43.245] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 18:06:43.246] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 18:06:43.251] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 1
+[2020-02-25 18:06:43.252] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 18:06:43.252] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 18:06:43.254] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 18:06:43.255] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 18:06:43.256] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 18:06:43.257] [https-jsse-nio-8888-exec-10] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 18:06:43.258] [https-jsse-nio-8888-exec-10] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 18:06:43.258] [https-jsse-nio-8888-exec-10] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 18:06:43.259] [https-jsse-nio-8888-exec-10] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 18:06:43.260] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 18:06:43.260] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 18:06:43.262] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 1
+[2020-02-25 18:06:43.296] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 18:06:43.297] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 18:06:43.298] [https-jsse-nio-8888-exec-10] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 18:06:48.737] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 18:06:48.737] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 18:06:48.739] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 1
+[2020-02-25 18:06:48.741] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - ==>  Preparing: DELETE FROM fud.file WHERE file.id=? 
+[2020-02-25 18:06:48.741] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - ==> Parameters: 2(Long)
+[2020-02-25 18:06:48.743] [https-jsse-nio-8888-exec-9] [DEBUG] com.centerm.fud_demo.dao.FileDao.deleteFile - <==    Updates: 1
+[2020-02-25 19:18:04.964] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:18:04.994] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:18:05.010] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:18:05.019] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:18:05.019] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:18:05.020] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:18:05.920] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 19:18:05.920] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 19:18:05.922] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 19:18:05.923] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 19:18:05.923] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 19:18:05.925] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 19:18:05.926] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 19:18:05.926] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 19:18:05.927] [https-jsse-nio-8888-exec-8] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 19:18:05.928] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:18:05.928] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 19:18:05.929] [https-jsse-nio-8888-exec-8] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 19:18:05.930] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:18:05.931] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 19:18:05.932] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 19:18:05.965] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 19:18:05.965] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 19:18:05.967] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 19:18:13.553] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 19:18:13.553] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 19:18:13.554] [https-jsse-nio-8888-exec-1] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 19:21:22.014] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:21:22.036] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:21:22.051] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:21:22.056] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:21:22.056] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:21:22.057] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:21:22.628] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 19:21:22.629] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 19:21:22.631] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 19:21:22.632] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 19:21:22.632] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 19:21:22.634] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 19:21:22.635] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 19:21:22.636] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 19:21:22.637] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 19:21:22.638] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:21:22.638] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 19:21:22.639] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 19:21:22.640] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:21:22.640] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 19:21:22.641] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 19:21:22.677] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 19:21:22.678] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 19:21:22.679] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 19:21:29.063] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 19:21:29.063] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 19:21:29.064] [https-jsse-nio-8888-exec-8] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0
+[2020-02-25 19:41:56.367] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:41:56.397] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:41:56.420] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:41:56.429] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==>  Preparing: SELECT fud.user.* FROM fud.user WHERE fud.user.username=? 
+[2020-02-25 19:41:56.429] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - ==> Parameters: admin(String)
+[2020-02-25 19:41:56.431] [https-jsse-nio-8888-exec-6] [DEBUG] com.centerm.fud_demo.dao.UserDao.findByUsername - <==      Total: 1
+[2020-02-25 19:41:57.274] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==>  Preparing: SELECT file.name, file.size, file.suffix, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime, file.download_times downloadTimes FROM fud.file WHERE fud.file.user_id=? ORDER BY download_times DESC LIMIT 0,5 
+[2020-02-25 19:41:57.275] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - ==> Parameters: 1(Long)
+[2020-02-25 19:41:57.278] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getMostDownloadRecordById - <==      Total: 0
+[2020-02-25 19:41:57.279] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==>  Preparing: SELECT COUNT(*) FROM fud.download WHERE fud.download.user_id = ? 
+[2020-02-25 19:41:57.280] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - ==> Parameters: 1(Long)
+[2020-02-25 19:41:57.282] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getDownloadTimesByUserId - <==      Total: 1
+[2020-02-25 19:41:57.284] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==>  Preparing: SELECT IFNULL(COUNT(*), 0) FROM fud.file WHERE fud.file.user_id=? 
+[2020-02-25 19:41:57.284] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - ==> Parameters: 1(Long)
+[2020-02-25 19:41:57.285] [https-jsse-nio-8888-exec-2] [DEBUG] c.c.fud_demo.dao.FileDao.getUploadTimesByCurrUser - <==      Total: 1
+[2020-02-25 19:41:57.287] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==>  Preparing: SELECT f.name, date_format(d.create_time,'%Y-%m-%d') AS createTime FROM fud.file f, fud.download d WHERE d.file_id=f.id AND f.user_id=? ORDER BY d.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:41:57.288] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - ==> Parameters: 1(Long)
+[2020-02-25 19:41:57.289] [https-jsse-nio-8888-exec-2] [DEBUG] c.centerm.fud_demo.dao.FileDao.getLatestDownloaded - <==      Total: 0
+[2020-02-25 19:41:57.291] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==>  Preparing: SELECT file.name, date_format(fud.file.create_time,'%Y-%m-%d') AS createTime FROM fud.file WHERE fud.file.user_id=? ORDER BY fud.file.create_time DESC LIMIT 0, 5 
+[2020-02-25 19:41:57.292] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - ==> Parameters: 1(Long)
+[2020-02-25 19:41:57.293] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.FileDao.getLatestUploaded - <==      Total: 0
+[2020-02-25 19:41:57.338] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==>  Preparing: SELECT r.role_name FROM fud.role r, fud.user u WHERE u.username=? AND u.role_id=r.id 
+[2020-02-25 19:41:57.338] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - ==> Parameters: admin(String)
+[2020-02-25 19:41:57.341] [https-jsse-nio-8888-exec-2] [DEBUG] com.centerm.fud_demo.dao.UserDao.findRoles - <==      Total: 1
+[2020-02-25 19:42:03.400] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==>  Preparing: SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status FROM fud.file WHERE file.md5=? AND file.user_id=? 
+[2020-02-25 19:42:03.401] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - ==> Parameters: 3b481f0b45553e138f4006f2edebd0b2(String), 1(Long)
+[2020-02-25 19:42:03.402] [https-jsse-nio-8888-exec-5] [DEBUG] com.centerm.fud_demo.dao.FileDao.findFileByFileMd5 - <==      Total: 0

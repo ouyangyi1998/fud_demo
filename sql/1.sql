@@ -40,6 +40,9 @@ CREATE TABLE IF NOT EXISTS `fud`.`file`(
                                            `create_time` DATETIME NOT NULL DEFAULT current_timestamp COMMENT '创建日期',
                                            `md5` VARCHAR(50) DEFAULT '' COMMENT 'md5值',
                                            `suffix` varchar(25) DEFAULT ''COMMENT '文件后缀',
+                                           `backup_url` varchar(255) NOT NULL COMMENT '备份路径',
+                                           `uuid` varchar(32) DEFAULT '' COMMENT 'uuid',
+                                           `suffix` int(11) DEFAULT 2 COMMENT '文件状态',
                                            PRIMARY KEY(`id`)
 )ENGINE = InnoDB DEFAULT CHARSET utf8 COMMENT '文件信息表';
 
