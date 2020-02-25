@@ -125,13 +125,12 @@ public class AdminController {
     public AjaxReturnMsg toDelete(HttpServletRequest request) {
         AjaxReturnMsg msg = new AjaxReturnMsg();
         Long fileId = Long.parseLong(request.getParameter("fileId"));
-        //ModelAndView mv = new ModelAndView();
         Boolean isSuccess=fileService.deleteFile(fileId);
         downloadService.deleteDownloadRecord(fileId);
         if (!isSuccess)
         {
             msg.setFlag(Constants.FAIL);
-            msg.setMsg("Delete Failed");
+            msg.setMsg("Delete Failed...");
             return msg;
         }
         msg.setFlag(Constants.SUCCESS);
@@ -174,7 +173,7 @@ public class AdminController {
         List<Map<String,Object>> downloadList= adminService.getAllDownloadToMorrisJs();
 
 
-        List<Map<String,Object>> list=new ArrayList<>();
+        List<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> map1=new HashMap<>();map1.put("days", GetDateUtil.getDate(7));map1.put("upload",0);map1.put("download",0);
         Map<String,Object> map2=new HashMap<>();map2.put("days",GetDateUtil.getDate(6));map2.put("upload",0);map2.put("download",0);
         Map<String,Object> map3=new HashMap<>();map3.put("days",GetDateUtil.getDate(5));map3.put("upload",0);map3.put("download",0);

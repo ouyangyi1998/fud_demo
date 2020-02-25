@@ -32,7 +32,6 @@ public class FileMonitorRegisterConfig {
             directory.mkdirs();
         }
         Long intervalSeconds = 5L;
-
         try{
             FileAlterationMonitor monitor = fileListenerMonitorUtils.getMonitor(directory, intervalSeconds);
             monitor.start();
