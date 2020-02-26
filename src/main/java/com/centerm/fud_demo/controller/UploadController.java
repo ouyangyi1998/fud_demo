@@ -50,6 +50,7 @@ public class UploadController {
     @ResponseBody
     public Map<String, Object> isUpload(@Valid FileForm form, HttpServletRequest request){
         currUser = (User)request.getSession().getAttribute("user");
+        log.info("需要上传的md5为： " + form.getMd5());
         return uploadService.findByFileMd5(form.getMd5(), currUser.getId());
     }
 

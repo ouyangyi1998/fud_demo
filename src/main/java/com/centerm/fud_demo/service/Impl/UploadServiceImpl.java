@@ -60,6 +60,7 @@ public class UploadServiceImpl implements UploadService {
     public Map<String, Object> findByFileMd5(String md5, Long currUserId) {
         userId = currUserId;
         FileRecord uploadFile = fileDao.findFileByFileMd5(md5, userId);
+        log.info("uploadFile: " + uploadFile);
         Map<String, Object> map = null;
         if (null == uploadFile){
             log.info("File is not uploaded...");
@@ -114,7 +115,7 @@ public class UploadServiceImpl implements UploadService {
             tempPath.mkdirs();
         }
         File path = new File(saveDirectory);
-        if (path.exists()){
+        if (!path.exists()){
             path.mkdirs();
         }
         //文件分片位置
@@ -132,7 +133,7 @@ public class UploadServiceImpl implements UploadService {
             map.put("fileUuid", fileUuid);
         }
         if (path.isDirectory()){
-            File[] fileArray = path.listFiles();
+            File[] fileArray = tempPath.listFiles();
             if (fileArray != null){
                 if (fileArray.length == total){
                     //分块全部上传完毕，合并
@@ -153,6 +154,8 @@ public class UploadServiceImpl implements UploadService {
                     }
                     temp.close();
                     outputStream.close();
+                    log.info("删除分片信息...");
+                    FileUtil.deleteDirectory(tempDirectory);
                     FileRecord uploadFile = new FileRecord();
                     if (1 == index){
                         uploadFile.setFileUuid(fileUuid);

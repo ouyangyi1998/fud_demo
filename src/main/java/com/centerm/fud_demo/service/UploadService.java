@@ -37,6 +37,12 @@ public interface UploadService {
      */
     Long getUploadTimesByCurrUser(Long userId);
 
+    /**
+     * 根据用户id与需要上传的文件md5查找文件
+     * @param md5
+     * @param userId
+     * @return
+     */
     Map<String, Object> findByFileMd5(String md5, Long userId);
 
     /**
