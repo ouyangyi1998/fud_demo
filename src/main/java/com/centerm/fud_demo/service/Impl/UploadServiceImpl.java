@@ -69,7 +69,7 @@ public class UploadServiceImpl implements UploadService {
             map.put("date", sdf.format(new Date()));
         }else{
             //上传过该文件，判断文件还是否存在
-            File file = new File(uploadPath + "real" + File.separator + userId + "/" + uploadFile.getFileUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
+            File file = new File(uploadPath + "real/" + userId + "/" + uploadFile.getFileUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
             if (file.exists()){
                 log.info("findByFileMd5: file already exists..." );
                 if (uploadFile.getStatus() == 1){
@@ -99,7 +99,6 @@ public class UploadServiceImpl implements UploadService {
         userId = currUserId;
         String action = form.getAction();
         String fileUuid = form.getUuid();
-        log.info("uuid: " + fileUuid);
         int index = Integer.valueOf(form.getIndex());
         String md5 = form.getMd5();
         int total = Integer.valueOf(form.getTotal());
@@ -120,7 +119,6 @@ public class UploadServiceImpl implements UploadService {
         }
         //文件分片位置
         File file = new File(tempDirectory, fileUuid + "_" + index);
-
         //根据action执行操作
         Map<String, Object> map = null;
         if (Constants.UPLOAD.equals(action)){
@@ -138,6 +136,7 @@ public class UploadServiceImpl implements UploadService {
             if (fileArray != null){
                 if (fileArray.length == total){
                     //分块全部上传完毕，合并
+                    log.info("开始合并...");
                     File newFile = new File(saveDirectory, fileName);
                     //文件追加写入
                     FileOutputStream outputStream = new FileOutputStream(newFile, true);
@@ -183,7 +182,7 @@ public class UploadServiceImpl implements UploadService {
                     String name = fileName.substring(0, fileName.lastIndexOf("."));
                     uploadFile.setFileUuid(fileUuid);
                     uploadFile.setStatus(1);
-                    uploadFile.setName(fileName);
+                    uploadFile.setName(name);
                     uploadFile.setSuffix(suffix);
                     uploadFile.setLocalUrl(filePath);
                     uploadFile.setSize(FileUtil.getFormatSize(Double.valueOf(size)));
@@ -197,19 +196,19 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public Map<String, Object> check(FileForm form) throws Exception {
+    public Map<String, Object> check(FileForm form){
         String fileUuid = form.getUuid();
         int index = Integer.valueOf(form.getIndex());
         String partMd5 = form.getPartMd5();
         int total = Integer.valueOf(form.getTotal());
-        String saveDirectory = uploadPath + "temp" + File.separator + fileUuid;
+        String tempDirectory = uploadPath + "temp" + File.separator + fileUuid;
         //验证路径是否存在，不存在则创建目录
-        File path = new File(saveDirectory);
+        File path = new File(tempDirectory);
         if (!path.exists()){
             path.mkdirs();
         }
         //文件分片位置
-        File file = new File(saveDirectory, fileUuid + "_" + index);
+        File file = new File(tempDirectory, fileUuid + "_" + index);
         //根据action来执行不同的操作
         Map<String, Object> map = null;
         String md5Str = FileUtil.getFileMd5(file);

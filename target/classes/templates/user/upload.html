@@ -98,7 +98,7 @@
                     processData: false,  //很重要，告诉jquery不要对form进行处理
                     contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                     success: function(data){
-                        var uuid = data.fileId;
+                        var uuid = data.fileUuid;
                         if (data.flag == "0") {
                             //没有上传过文件
                             realUpload(file,uuid,md5,data.date);
