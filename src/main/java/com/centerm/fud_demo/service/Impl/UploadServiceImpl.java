@@ -108,7 +108,7 @@ public class UploadServiceImpl implements UploadService {
         String suffix = fileName.substring(fileName.lastIndexOf('.'));
         String tempDirectory = uploadPath + "temp" + File.separator + fileUuid;
         String saveDirectory = uploadPath + "real" + File.separator + userId + File.separator + fileUuid;
-        String filePath = saveDirectory + File.separator + fileUuid + "." + suffix;
+        String filePath = saveDirectory + File.separator + fileName;
         //验证路径是否存在，不存在则创建目录
         File tempPath = new File(tempDirectory);
         if (!tempPath.exists()){
