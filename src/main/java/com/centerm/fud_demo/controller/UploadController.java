@@ -105,6 +105,7 @@ public class UploadController {
     @ResponseBody
     public List<Map<String,Object>> getChart(HttpServletRequest request)
     {
+        System.out.println("123");
         Long userId=((User)request.getSession().getAttribute("user")).getId();
         List<Map<String,Object>> uploadList= fileService.getUploadToMorrisJs(userId);
         List<Map<String,Object>> downloadList= fileService.getDownloadToMorrisJs(userId);
