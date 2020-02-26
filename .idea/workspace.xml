@@ -3,11 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3a692b83-86f2-4501-a6b3-5ea855defbef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/config/FileMonitorRegisterConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/config/FileMonitorRegisterConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/listener/FileListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/listener/FileListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/1.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/entity/FileRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/entity/FileRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/service/Impl/UploadServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/service/Impl/UploadServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/utils/FileListenerMonitorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/utils/FileListenerMonitorUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/FileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/FileMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/upload.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileRecord.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UploadServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UploadServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/FileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/FileMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/user/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/user/upload.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +174,7 @@
       <workItem from="1582522526741" duration="3392000" />
       <workItem from="1582531939779" duration="106000" />
       <workItem from="1582532124124" duration="2123000" />
-      <workItem from="1582599393949" duration="38552000" />
+      <workItem from="1582599393949" duration="41251000" />
     </task>
     <task id="LOCAL-00001" summary="- 修改细节">
       <created>1581423486291</created>
@@ -221,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582699500902</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- 新增文件夹监听器">
+      <created>1582703889835</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1582703889835</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,10 +272,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="299" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1581843571799" />
-    <state x="411" y="121" width="1154" height="863" key="CommitChangelistDialog2" timestamp="1582703875132">
+    <state x="411" y="121" width="1154" height="863" key="CommitChangelistDialog2" timestamp="1582703889757">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="411" y="121" width="1154" height="863" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1582703875132" />
+    <state x="411" y="121" width="1154" height="863" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1582703889757" />
     <state width="254" height="195" key="DatabaseViewActions_Filter" timestamp="1581839411872">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -273,38 +284,38 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1582331624936" />
-    <state width="1799" height="306" key="GridCell.Tab.0.bottom" timestamp="1582703196057">
+    <state width="1799" height="355" key="GridCell.Tab.0.bottom" timestamp="1582723170424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196057" />
-    <state width="1799" height="306" key="GridCell.Tab.0.center" timestamp="1582703196056">
+    <state width="1799" height="355" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170424" />
+    <state width="1799" height="355" key="GridCell.Tab.0.center" timestamp="1582723170423">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196056" />
-    <state width="1799" height="306" key="GridCell.Tab.0.left" timestamp="1582703196056">
+    <state width="1799" height="355" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170423" />
+    <state width="1799" height="355" key="GridCell.Tab.0.left" timestamp="1582723170423">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196056" />
-    <state width="1799" height="306" key="GridCell.Tab.0.right" timestamp="1582703196056">
+    <state width="1799" height="355" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170423" />
+    <state width="1799" height="355" key="GridCell.Tab.0.right" timestamp="1582723170423">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196056" />
-    <state width="1799" height="306" key="GridCell.Tab.1.bottom" timestamp="1582703196057">
+    <state width="1799" height="355" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170423" />
+    <state width="1799" height="355" key="GridCell.Tab.1.bottom" timestamp="1582723170424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196057" />
-    <state width="1799" height="306" key="GridCell.Tab.1.center" timestamp="1582703196057">
+    <state width="1799" height="355" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170424" />
+    <state width="1799" height="355" key="GridCell.Tab.1.center" timestamp="1582723170424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196057" />
-    <state width="1799" height="306" key="GridCell.Tab.1.left" timestamp="1582703196057">
+    <state width="1799" height="355" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170424" />
+    <state width="1799" height="355" key="GridCell.Tab.1.left" timestamp="1582723170424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196057" />
-    <state width="1799" height="306" key="GridCell.Tab.1.right" timestamp="1582703196057">
+    <state width="1799" height="355" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170424" />
+    <state width="1799" height="355" key="GridCell.Tab.1.right" timestamp="1582723170424">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1799" height="306" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1582703196057" />
+    <state width="1799" height="355" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1582723170424" />
     <state width="273" height="606" key="HiddenNamespacesPopup" timestamp="1581396418234">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -313,10 +324,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="697" y="265" width="582" height="574" key="MultipleFileMergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1582599793790" />
-    <state x="588" y="287" width="800" height="531" key="Vcs.Push.Dialog.v2" timestamp="1582687337413">
+    <state x="588" y="287" width="800" height="531" key="Vcs.Push.Dialog.v2" timestamp="1582703897337">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="287" width="800" height="531" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1582687337413" />
+    <state x="588" y="287" width="800" height="531" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1582703897337" />
     <state x="791" y="411" width="395" height="283" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1581843596425">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

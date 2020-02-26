@@ -98,7 +98,7 @@
                     processData: false,  //很重要，告诉jquery不要对form进行处理
                     contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                     success: function(data){
-                        var uuid = data.fileUuid;
+                        var uuid = data.uuid;
                         if (data.flag == "0") {
                             //没有上传过文件
                             realUpload(file,uuid,md5,data.date);
@@ -188,7 +188,7 @@
                     processData: false,  //很重要，告诉jquery不要对form进行处理
                     contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                     success: function (data) {
-                        var fileuuid = data.fileId;
+                        var fileuuid = data.uuid;
                         var flag = data.flag;
                         if (flag != "2") {
                             //服务器返回该分片是否上传过
@@ -237,14 +237,6 @@
 
 <body>
 
-<!--<input type="file" id="file" />-->
-<!--<button id="upload">上传</button>-->
-<!--<br/><br/>
-<span style="font-size:16px">上传进度：</span><span id="output" style="font-size:16px"></span>
-<span id="useTime" style="font-size:16px;margin-left:20px;">上传时间：</span>
-<span id="uuid" style="font-size:16px;margin-left:20px;">文件ID：</span>
-<br/><br/>
-<span id="param" style="font-size:16px">上传过程：</span>-->
 <div class="container" align="center">
 <div class="form-group">
     <div class="col-sm-4 control-label">选择文件</div>

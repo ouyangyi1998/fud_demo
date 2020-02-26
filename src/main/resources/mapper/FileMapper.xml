@@ -23,7 +23,7 @@
     </select>
     <insert id="saveFileBegin" parameterMap="FileRecord">
         INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status)
-        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl}, #{fileUuid}, #{status})
+        VALUES(#{name}, #{localUrl}, #{size}, #{userId}, #{md5}, #{suffix}, #{backupUrl}, #{uuid}, #{status})
     </insert>
     <insert id="saveFileSmall" parameterMap="FileRecord">
         INSERT INTO file(name, local_url, size, user_id, md5, suffix, backup_url, uuid, status)
@@ -32,7 +32,7 @@
     <update id="saveFileEnd" parameterMap="FileRecord">
         UPDATE fud.file
         SET file.status=#{status}
-        WHERE file.uuid=#{fileUuid}
+        WHERE file.uuid=#{uuid}
     </update>
     <delete id="deleteFileById" parameterType="long">
         DELETE FROM fud.file
@@ -160,7 +160,7 @@
         WHERE file.local_url=#{filePath}
     </select>
     <select id="findFileByFileMd5" resultType="com.centerm.fud_demo.entity.FileRecord">
-        SELECT file.id,file.uuid fileUuid, file.name, file.md5, file.suffix, file.status
+        SELECT file.id,file.uuid, file.name, file.md5, file.suffix, file.status
         FROM fud.file
         WHERE file.md5=#{fileMd5} AND file.user_id=#{userId}
     </select>

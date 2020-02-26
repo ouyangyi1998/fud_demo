@@ -16,7 +16,7 @@ import java.util.Date;
 public class FileRecord {
 
     private Long id;
-    private String fileUuid;
+    private String uuid;
     private String name;
     private String localUrl;
     private String size;

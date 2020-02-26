@@ -66,18 +66,18 @@ public class UploadServiceImpl implements UploadService {
             log.info("File is not uploaded...");
             map = new HashMap<>();
             map.put("flag", 0);
-            map.put("fileUuid", FileUtil.genUniqueKey());
+            map.put("uuid", FileUtil.genUniqueKey());
             map.put("date", sdf.format(new Date()));
         }else{
             //上传过该文件，判断文件还是否存在
-            File file = new File(uploadPath + "real/" + userId + "/" + uploadFile.getFileUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
+            File file = new File(uploadPath + "real/" + userId + "/" + uploadFile.getUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
             if (file.exists()){
                 log.info("findByFileMd5: file already exists..." );
                 if (uploadFile.getStatus() == 1){
                     log.info("File is not complete...");
                     map = new HashMap<>();
                     map.put("flag", 1);
-                    map.put("fileUuid", uploadFile.getFileUuid());
+                    map.put("uuid", uploadFile.getUuid());
                     map.put("date", sdf.format(new Date()));
                 }else if(uploadFile.getStatus() == 2){
                     log.info("File is complete...");
@@ -88,7 +88,7 @@ public class UploadServiceImpl implements UploadService {
                 fileDao.deleteFile(uploadFile.getId());
                 map = new HashMap<>();
                 map.put("flag", 0);
-                map.put("fileUud", uploadFile.getFileUuid());
+                map.put("uuid", uploadFile.getUuid());
                 map.put("date", sdf.format(new Date()));
             }
         }
@@ -99,15 +99,15 @@ public class UploadServiceImpl implements UploadService {
     public Map<String, Object> realUpload(FileForm form, MultipartFile multipartFile, Long currUserId) throws Exception {
         userId = currUserId;
         String action = form.getAction();
-        String fileUuid = form.getUuid();
+        String uuid = form.getUuid();
         int index = Integer.valueOf(form.getIndex());
         String md5 = form.getMd5();
         int total = Integer.valueOf(form.getTotal());
         String fileName = form.getName();
         String size = form.getSize();
         String suffix = fileName.substring(fileName.lastIndexOf('.'));
-        String tempDirectory = uploadPath + "temp" + File.separator + fileUuid;
-        String saveDirectory = uploadPath + "real" + File.separator + userId + File.separator + fileUuid;
+        String tempDirectory = uploadPath + "temp" + File.separator + uuid;
+        String saveDirectory = uploadPath + "real" + File.separator + userId + File.separator + uuid;
         String filePath = saveDirectory + File.separator + fileName;
         //验证路径是否存在，不存在则创建目录
         File tempPath = new File(tempDirectory);
@@ -119,7 +119,7 @@ public class UploadServiceImpl implements UploadService {
             path.mkdirs();
         }
         //文件分片位置
-        File file = new File(tempDirectory, fileUuid + "_" + index);
+        File file = new File(tempDirectory, uuid + "_" + index);
         //根据action执行操作
         Map<String, Object> map = null;
         if (Constants.UPLOAD.equals(action)){
@@ -127,10 +127,10 @@ public class UploadServiceImpl implements UploadService {
             if (file.exists()){
                 file.delete();
             }
-            multipartFile.transferTo(new File(tempDirectory, fileUuid + "_" + index));
+            multipartFile.transferTo(new File(tempDirectory, uuid + "_" + index));
             map = new HashMap<>();
             map.put("flag", "1");
-            map.put("fileUuid", fileUuid);
+            map.put("uuid", uuid);
         }
         if (path.isDirectory()){
             File[] fileArray = tempPath.listFiles();
@@ -147,7 +147,7 @@ public class UploadServiceImpl implements UploadService {
                     FileInputStream temp = null;
                     for (int i = 0; i < total; i++) {
                         int j = i + 1;
-                        temp = new FileInputStream(new File(tempDirectory, fileUuid + "_" + j));
+                        temp = new FileInputStream(new File(tempDirectory, uuid + "_" + j));
                         while ((len = temp.read(byt)) != -1){
                             outputStream.write(byt, 0, len);
                         }
@@ -158,7 +158,7 @@ public class UploadServiceImpl implements UploadService {
                     FileUtil.deleteDirectory(tempDirectory);
                     FileRecord uploadFile = new FileRecord();
                     if (1 == index){
-                        uploadFile.setFileUuid(fileUuid);
+                        uploadFile.setUuid(uuid);
                         uploadFile.setStatus(2);
                         uploadFile.setName(fileName);
                         uploadFile.setMd5(md5);
@@ -170,12 +170,12 @@ public class UploadServiceImpl implements UploadService {
                         fileDao.saveFileSmall(uploadFile);
                     }else
                     {
-                        uploadFile.setFileUuid(fileUuid);
+                        uploadFile.setUuid(uuid);
                         uploadFile.setStatus(2);
                         fileDao.saveFileEnd(uploadFile);
                     }
                     map = new HashMap<>();
-                    map.put("fileUuid", fileUuid);
+                    map.put("uuid", uuid);
                     map.put("flag", 2);
                     return map;
                 }else if (1 == index){
@@ -183,7 +183,7 @@ public class UploadServiceImpl implements UploadService {
                     FileRecord uploadFile = new FileRecord();
                     uploadFile.setMd5(md5);
                     String name = fileName.substring(0, fileName.lastIndexOf("."));
-                    uploadFile.setFileUuid(fileUuid);
+                    uploadFile.setUuid(uuid);
                     uploadFile.setStatus(1);
                     uploadFile.setName(name);
                     uploadFile.setSuffix(suffix);
@@ -200,18 +200,18 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public Map<String, Object> check(FileForm form){
-        String fileUuid = form.getUuid();
+        String uuid = form.getUuid();
         int index = Integer.valueOf(form.getIndex());
         String partMd5 = form.getPartMd5();
         int total = Integer.valueOf(form.getTotal());
-        String tempDirectory = uploadPath + "temp" + File.separator + fileUuid;
+        String tempDirectory = uploadPath + "temp" + File.separator + uuid;
         //验证路径是否存在，不存在则创建目录
         File path = new File(tempDirectory);
         if (!path.exists()){
             path.mkdirs();
         }
         //文件分片位置
-        File file = new File(tempDirectory, fileUuid + "_" + index);
+        File file = new File(tempDirectory, uuid + "_" + index);
         //根据action来执行不同的操作
         Map<String, Object> map = null;
         String md5Str = FileUtil.getFileMd5(file);
@@ -223,14 +223,14 @@ public class UploadServiceImpl implements UploadService {
             //已上传该分片
             map = new HashMap<>();
             map.put("flag", "1");
-            map.put("fileUuid", fileUuid);
+            map.put("uuid", uuid);
             if (index != total){
                 return map;}
             }else{
             //分片未上传
             map = new HashMap<>();
             map.put("flag", "0");
-            map.put("fileUuid", fileUuid);
+            map.put("uuid", uuid);
             return map;
         }
         return map;
