@@ -2,17 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a692b83-86f2-4501-a6b3-5ea855defbef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/fud_demo_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/fud_demo_war.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/fud_demo_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/fud_demo_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_janino_janino_2_5_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/1.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/entity/FileRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/entity/FileRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/service/Impl/UploadServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/centerm/fud_demo/service/Impl/UploadServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/FileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/FileMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/upload.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fud_demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fud_demo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/FudDemoApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/FudDemoApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/config/DataSourceConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/config/DataSourceConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/config/HttpsConfig$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/config/HttpsConfig$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/DownloadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/DownloadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/SuperVipController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/SuperVipController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/UploadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/UploadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/AdminDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/AdminDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/FileDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/FileDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/SuperVipDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/SuperVipDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/dao/UserDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/DownloadRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/DownloadRecord.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileForm.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/FileRecord.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/ajax/AjaxReturnMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/entity/ajax/AjaxReturnMsg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/AccountBanException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/AccountBanException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/MultiAccountOnlineException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/MultiAccountOnlineException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/NotAcceptTermsException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/NotAcceptTermsException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/UsernameRepeatingException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/exception/UsernameRepeatingException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/filter/KickoutSessionControllerFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/filter/KickoutSessionControllerFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/listener/Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/listener/Listener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/AdminService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/BackupService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/BackupService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/DownloadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/DownloadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/FileService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/FileService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/AdminServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/AdminServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/BackupServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/BackupServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/DownloadServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/DownloadServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/FileServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/FileServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/SuperVipServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/SuperVipServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UploadServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UploadServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/FileMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/FileMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/user/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/user/upload.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/Impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/SuperVipService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/SuperVipService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/UploadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/UploadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/shiro/UserRealm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/shiro/UserRealm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/shiro/conf/ShiroConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/shiro/conf/ShiroConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/AesUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/AesUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/FileUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/FileUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/GetDateUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/GetDateUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/PasswordHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/centerm/fud_demo/utils/PasswordHelper.class" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,6 +128,71 @@
     </expand>
     <select />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1247462988">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="properties" value="1" />
+          <entry key="sql" value="1" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Properties" value="1" />
+          <entry key="SQL" value="1" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="properties" value="6" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Properties" value="6" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql/1.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-619" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="3" column="135" selection-start-line="3" selection-start-column="135" selection-end-line="3" selection-end-column="135" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="430">
+              <caret line="103" column="27" selection-start-line="103" selection-start-column="27" selection-end-line="103" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -89,6 +203,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -96,8 +224,102 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="705" />
+    <option name="y" value="66" />
+    <option name="width" value="2272" />
+    <option name="height" value="1333" />
+  </component>
   <component name="ProjectId" id="1XeA6wyhwEJ3WnDjtnL6jTU3qK3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="file" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="file" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="centerm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="centerm" type="462c0819:PsiDirectoryNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fud_demo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fud_demo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -112,6 +334,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/css" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -127,6 +352,18 @@
       <recent name="$PROJECT_DIR$/sql" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="FudDemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -175,6 +412,7 @@
       <workItem from="1582531939779" duration="106000" />
       <workItem from="1582532124124" duration="2123000" />
       <workItem from="1582599393949" duration="41251000" />
+      <workItem from="1582723867231" duration="502000" />
     </task>
     <task id="LOCAL-00001" summary="- 修改细节">
       <created>1581423486291</created>
@@ -235,8 +473,52 @@
     <option name="localTasksCounter" value="9" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="502000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="3456" height="1416" extended-state="6" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Capture Tool" />
+      <window_info id="Web" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24985233" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Statistic" />
+      <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Messages" weight="0.32990506" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32990506" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Maven Projects" />
+      <window_info active="true" anchor="right" id="Database" visible="true" weight="0.32988778" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- 修改细节" />
@@ -344,5 +626,104 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="654" y="255" width="680" height="688" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1582606564619" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/sql/1.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-619" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="103" column="27" selection-start-line="103" selection-start-column="27" selection-end-line="103" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="3" column="135" selection-start-line="3" selection-start-column="135" selection-end-line="3" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>fud_demo:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>fud_demo</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: ch.qos.logback:logback-classic:1.2.3</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

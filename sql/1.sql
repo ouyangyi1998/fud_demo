@@ -55,16 +55,6 @@ CREATE TABLE IF NOT EXISTS `fud`.`download`(
                                                PRIMARY KEY(`id`)
 )ENGINE = InnoDB DEFAULT CHARSET utf8 COMMENT '下载信息表';
 
-DROP TABLE IF EXISTS `fud`.`backup`;
-CREATE TABLE IF NOT EXISTS `fud`.`backup`(
-                                             `file_id` BIGINT NOT NULL COMMENT '文件id',
-                                             `name` VARCHAR(255) NOT NULL COMMENT '文件名',
-                                             `local_url` VARCHAR(255) NOT NULL COMMENT '存储在服务器端的地址',
-                                             `user_id` BIGINT NOT NULL COMMENT '用户id',
-                                             `create_time` DATETIME NOT NULL DEFAULT current_timestamp COMMENT '创建时间',
-                                             `md5` VARCHAR(50) DEFAULT '' COMMENT 'md5值',
-                                             `suffix` varchar(25) DEFAULT ''COMMENT '文件后缀'
-)ENGINE = InnoDB DEFAULT CHARSET utf8 COMMENT '备份信息表';
 
 
 
