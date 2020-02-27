@@ -162,6 +162,6 @@
     <select id="findFileByFileMd5" resultType="com.centerm.fud_demo.entity.FileRecord">
         SELECT file.id,file.uuid, file.name, file.md5, file.suffix, file.status
         FROM fud.file
-        WHERE file.md5=#{fileMd5} AND file.user_id=#{userId}
+        WHERE file.md5=#{param1} AND file.user_id=#{param2}
     </select>
 </mapper>

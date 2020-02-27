@@ -60,6 +60,7 @@ public class UploadServiceImpl implements UploadService {
     public Map<String, Object> findByFileMd5(String md5, Long currUserId) {
         userId = currUserId;
         FileRecord uploadFile = fileDao.findFileByFileMd5(md5, userId);
+        System.out.println(uploadFile==null);
         log.info("uploadFile: " + uploadFile);
         Map<String, Object> map = null;
         if (null == uploadFile){
@@ -71,20 +72,24 @@ public class UploadServiceImpl implements UploadService {
         }else{
             //上传过该文件，判断文件还是否存在
             File file = new File(uploadPath + "real/" + userId + "/" + uploadFile.getUuid() + "/" + uploadFile.getName() + "." + uploadFile.getSuffix());
+            System.out.println(file.exists());
             if (file.exists()){
                 log.info("findByFileMd5: file already exists..." );
                 if (uploadFile.getStatus() == 1){
+                    System.out.println("1");
                     log.info("File is not complete...");
                     map = new HashMap<>();
                     map.put("flag", 1);
                     map.put("uuid", uploadFile.getUuid());
                     map.put("date", sdf.format(new Date()));
                 }else if(uploadFile.getStatus() == 2){
+                    System.out.println("2");
                     log.info("File is complete...");
                     map = new HashMap<>();
                     map.put("flag", 2);
                 }
             }else {
+                System.out.println("3");
                 fileDao.deleteFile(uploadFile.getId());
                 map = new HashMap<>();
                 map.put("flag", 0);
@@ -157,7 +162,7 @@ public class UploadServiceImpl implements UploadService {
                     log.info("删除分片信息...");
                     FileUtil.deleteDirectory(tempDirectory);
                     FileRecord uploadFile = new FileRecord();
-                    if (1 == index){
+                    if (1 == total){
                         uploadFile.setUuid(uuid);
                         uploadFile.setStatus(2);
                         uploadFile.setName(fileName);
